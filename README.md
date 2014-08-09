@@ -1,6 +1,8 @@
 # Confopy
 
-Asserting the linguistic and structural quality of scientific texts. Written in Python.
+Asserting the linguistic and structural quality of scientific texts.
+Written in Python.
+
 Name origin: Confopy := Conform + Python 
 
 
