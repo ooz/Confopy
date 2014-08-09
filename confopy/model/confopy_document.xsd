@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Confopy data format -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="qualified">
+
+    <!-- Complex elements -->
+    <!-- either documents or document should be root element -->
+    <xs:element name="documents" type="documents_type"/>
+    <xs:element name="document"  type="document_type" />
+
+    <xs:element name="meta"      type="meta_type"     />
+    <xs:element name="section"   type="section_type"  />
+    <xs:element name="chapter"   type="section_type"  />
+    <xs:element name="paragraph" type="paragraph_type"/>
+    <xs:element name="float"     type="float_type"    />
+    <xs:element name="footnote"  type="float_type"    />
+
+    <!-- Simple elements -->
+    <xs:element name="title"    type="xs:string"/>
+    <xs:element name="author"   type="xs:string"/>
+    <xs:element name="language" type="xs:string"/>
+
+    <!-- Attributes -->
+    <xs:attribute name="pagenr"   type="xs:string"/>
+    <xs:attribute name="title"    type="xs:string"/>
+    <xs:attribute name="number"   type="xs:string"/>
+    <xs:attribute name="font"     type="xs:string"/>
+    <xs:attribute name="fontsize" type="xs:string"/>
+    <xs:attribute name="emph"     type="xs:string"/>
+
+    <!-- Attribute groups -->
+    <xs:attributeGroup name="section_attrs">
+        <xs:attribute ref="number"              />
+        <xs:attribute ref="title" use="required"/>
+        <xs:attribute ref="pagenr"              />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="paragraph_attrs">
+        <xs:attribute ref="pagenr"  />
+        <xs:attribute ref="font"    />
+        <xs:attribute ref="fontsize"/>
+        <xs:attribute ref="emph"    />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="float_attrs">
+        <xs:attribute ref="pagenr"/>
+        <xs:attribute ref="number"/>
+    </xs:attributeGroup>
+
+    <!-- Complex types -->
+    <xs:complexType name="documents_type">
+        <xs:sequence>
+            <xs:element ref="document" minOccurs="0" 
+                                       maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="document_type">
+        <xs:sequence>
+            <xs:element ref="meta" minOccurs="0"/>
+            <xs:choice>
+                <xs:element ref="section" maxOccurs="unbounded"/>
+                <xs:element ref="chapter" maxOccurs="unbounded"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="meta_type">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="title"                       />
+            <xs:element ref="author" maxOccurs="unbounded"/>
+            <xs:element ref="language"                    />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="section_type">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="paragraph"/>
+            <xs:element ref="float"    />
+            <xs:element ref="footnote" />
+            <xs:element ref="section"  />
+        </xs:choice>
+        <xs:attributeGroup ref="section_attrs"/>
+    </xs:complexType>
+
+    <xs:complexType name="paragraph_type">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="paragraph_attrs"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="float_type">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="float_attrs"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>
