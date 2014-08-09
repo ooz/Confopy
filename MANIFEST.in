@@ -1,0 +1,4 @@
+include bin/confopy
+
+include README.md
+include *.md
