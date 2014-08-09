@@ -1,0 +1,12 @@
+*.pkl
+
+Confopy.egg-info/
+confopy/localization/de/corpus_de/
+confopy/test/data/
+
+data/
+doc/
+
+MANIFEST
+model_classdia.dot
+model_classdia.png
