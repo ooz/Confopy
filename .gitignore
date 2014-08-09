@@ -6,7 +6,20 @@ confopy/test/data/
 
 data/
 doc/
+talk/
 
 MANIFEST
 model_classdia.dot
 model_classdia.png
+draft.xml
+draftfinal.xml
+final.xml
+makefile
+minus.xml
+mt_status.txt
+nlp.txt
+nltk_data.txt
+plus.xml
+run_classdia.sh
+run_main.sh
+run_tests.sh
