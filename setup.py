@@ -6,7 +6,7 @@ except ImportError:
 setup(
     name="Confopy",
     version="0.2.0",
-    url="https://github.com/ooz/confopy",
+    url="https://github.com/ooz/Confopy",
     author="Oliver Zscheyge",
     author_email="oliverzscheyge@gmail.com",
     packages=["confopy", "confopy.analysis", "confopy.localization", "confopy.model", "confopy.pdfextract", "confopy.localization.de", "confopy.localization.de.corpus_de"],
