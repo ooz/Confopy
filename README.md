@@ -99,6 +99,6 @@ Unicode errors
  * Configure terminal to use unicode!
  * For Python devs:
     http://docs.python.org/2/howto/unicode.html#the-unicode-type
- * Convert the TIGER Treebank Version 1 file
-    "tiger_release_july03.penn"
+ * Convert the TIGER Treebank file
+    "tiger_release_aug07.corrected.16012013.xml"
    to utf-8 encoding before using Confopy!
