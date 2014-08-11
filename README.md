@@ -1,4 +1,5 @@
-# Confopy
+Confopy
+=======
 
 Asserting the linguistic and structural quality of scientific texts.
 Written in Python.
@@ -6,13 +7,20 @@ Written in Python.
 Name origin: Confopy := Conform + Python 
 
 
-# Installation
+Installation
+============
 
-## Installation using pypi
+Installation using pypi
+-----------------------
 
     sudo pip install -U Confopy
 
-## Manual installation
+Launch Confopy with
+
+    confopy
+
+Manual installation
+-------------------
 
 Dependencies:
 
@@ -28,7 +36,8 @@ Launch Confopy with
 
     python confopy/
 
-## Issues with NLTK
+Issues with NLTK
+----------------
 
 If you get the following error while launching confopy:
 
@@ -62,7 +71,8 @@ Comment line 40 in the file:
       /usr/local/lib/python2.7/dist-packages/nltk/__init__.py
 
 
-# Getting a corpus
+Getting a corpus
+================
 
 Confopy needs a corpus (collection of language data) to run.
 
@@ -77,12 +87,14 @@ For German (TIGER treebank):
     5. Verify that the generated file is named exactly like in confopy/config.py
 
 
-# Python 3
+Python 3
+========
 
  * The package python-pdfminer only works with python 2.4 or newer, but not with python 3
 
 
-# Unicode errors
+Unicode errors
+==============
 
  * Configure terminal to use unicode!
  * For Python devs:
