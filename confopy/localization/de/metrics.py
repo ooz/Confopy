@@ -25,7 +25,9 @@ class WordLengthMetric(Metric):
         words = node.words()
         word_count = len(words)
         word_len = reduce(lambda w, v: w + v, [len(w) for w in words], 0)
-        return word_len / float(len(words))
+        if len(words) > 0:
+            return word_len / float(len(words))
+        return 0.0
 Analyzer.register(WordLengthMetric())
 
 
@@ -44,7 +46,9 @@ class SpellCheckMetric(Metric):
         for w in words:
             if not checker.check(w):
                 n_errors += 1
-        return n_errors / float(len(words))
+        if len(words) > 0:
+            return n_errors / float(len(words))
+        return 0.0
 Analyzer.register(SpellCheckMetric())
 
 
@@ -251,7 +255,9 @@ class FillerMetric(Metric):
         for w in words:
             if w in fillers:
                 filler_count += 1
-        return filler_count / float(len(words))
+        if len(words) > 0:
+            return filler_count / float(len(words))
+        return 0.0
 
 Analyzer.register(FillerMetric())
 
