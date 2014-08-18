@@ -180,7 +180,7 @@ class DocumentReport(Report):
         output.append(u"")
         output.append(u"## Regeln")
         output.append(u"")
-        rule_IDs = [u"introduction", u"subsections", u"floatreference"]
+        rule_IDs = [u"introduction", u"subsections", u"floatreference", u"floatcaption"]
         A = Analyzer.instance()
         rules = [A.get(rule=ID) for ID in rule_IDs if A.get(rule=ID) is not None]
         rule_messages = eval_doc(doc, rules)

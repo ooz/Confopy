@@ -11,28 +11,13 @@ from confopy.model.document import *
 
 
 
-class RuleKind(object):
-    """Kind of a rule.
-    Suitable for masking.
-    """
-
-    UNSPECIFIED = 0 << 0
-
-    # Scope
-    DOCUMENT  = 1 << 0
-    SECTION   = 1 << 1
-    PARAGRAPH = 1 << 2
-    FLOAT     = 1 << 3
-
-
 class Rule(Localizable):
     """Base class to describe rule based knowledge.
     """
-    def __init__(self, ID=u"", language=u"", brief=u"", description=u"", kind=RuleKind.UNSPECIFIED):
+    def __init__(self, ID=u"", language=u"", brief=u"", description=u""):
         """Initializer.
         """
         super(Rule, self).__init__(ID, language, brief, description)
-        self.kind = kind
 
     def evaluate(self, node):
         """Evaluates the rule on a Node.
@@ -62,6 +47,12 @@ def is_chapter(node):
             return True
     return False
 
+def is_section(node):
+    return isinstance(node, Section)
+
+def is_float(node):
+    return node.is_float()
+
 def has_introduction(node):
     children = node.children
     if len(children) > 0:
@@ -87,13 +78,22 @@ def is_referenced(flt):
 
         if flt.number != u"":
             return flt.number in para_texts
-        flt_text = flt.text.strip().split(" ")
+        flt_text = flt.text.strip().split(u" ")
         if len(flt_text) >= 2:
-            flt_text = flt_text[0].strip() + " " + flt_text[1].strip()
+            flt_text = flt_text[0].strip() + u" " + flt_text[1].strip()
             flt_text = flt_text.replace(u":", u"")
             return flt_text in para_texts
 
     return False
+
+FLT_CAPTION_MIN_SIZE = 3
+FLT_CAPTION_NR_SIZE = 2
+def has_caption(flt):
+    flt_text = flt.text.strip().replace(u"\n", u" ").split(u" ")
+    if flt.number != u"":
+        return len(flt_text) >= FLT_CAPTION_MIN_SIZE
+    return len(flt_text) >= FLT_CAPTION_MIN_SIZE + FLT_CAPTION_NR_SIZE
+
 
 
 # Utility functions
@@ -109,37 +109,16 @@ def eval_doc(document, rules):
         of violated rules.
     """
     messages = list()
+    for rule in rules:
+        if not rule.evaluate(document):
+            messages.append(rule.message(document))
 
-    if isinstance(document, Document):
-        doc_rules = [r for r in rules if r.kind == RuleKind.DOCUMENT]
-        messages = _eval_rules(document, doc_rules)
-        children = document.children()
-        for child in children:
-            messages = messages + eval_doc(child, rules)
-
-    elif isinstance(document, Section):
-        sec_rules = [r for r in rules if r.kind == RuleKind.SECTION]
-        messages = messages + _eval_rules(document, sec_rules)
-        children = document.children()
-        for child in children:
-            messages = messages + eval_doc(child, rules)
-
-    elif isinstance(document, Paragraph):
-        para_rules = [r for r in rules if r.kind == RuleKind.PARAGRAPH]
-        messages = _eval_rules(document, para_rules)
-
-    elif document.is_float():
-        float_rules = [r for r in rules if r.kind == RuleKind.FLOAT]
-        messages = _eval_rules(document, float_rules)
+    children = document.children()
+    for child in children:
+        messages = messages + eval_doc(child, rules)
 
     return messages
 
-def _eval_rules(node, rules):
-    msgs = list()
-    for rule in rules:
-        if not rule.evaluate(node):
-            msgs.append(rule.message(node))
-    return msgs
 
 
 if __name__ == '__main__':
