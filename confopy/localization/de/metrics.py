@@ -62,19 +62,21 @@ class LexiconMetric(Metric):
 
     def evaluate(self, node):
         words = node.words()
+        words_no_no_words = [w for w in words if w not in NO_WORDS]
         A = Analyzer.instance()
         corp = A.get(corpus=u"TIGER")
         tagger = corp.tagger(True)
         tagged_words = tagger.tag(words)
         unique_words = set()
-        if len(tagged_words) > 0:
+        if len(tagged_words) > 0 and len(words_no_no_words) > 0:
             for w in tagged_words:
-                if w[1] and w[1].startswith(u"V"):
-                    lemm = lemma(w[0])
-                    unique_words.add(lemm)
-                else:
-                    unique_words.add(w[0])
-            return float(len(unique_words)) / len(words)
+                if w[0] not in NO_WORDS:
+                    if w[1] and w[1].startswith(u"V"):
+                        lemm = lemma(w[0])
+                        unique_words.add(lemm)
+                    else:
+                        unique_words.add(w[0])
+            return float(len(unique_words)) / len(words_no_no_words)
         return 0.0
 Analyzer.register(LexiconMetric())
 
@@ -89,7 +91,13 @@ class SentLengthMetric(Metric):
         A = Analyzer.instance()
         corp = A.get(corpus=u"TIGER")
         sents = node.sents(tokenizer=corp.sent_tokenizer())
-        return fsum([len(s) for s in sents]) / len(sents)
+        summ = 0
+        for s in sents:
+            s = [w for w in s if w not in NO_WORDS]
+            summ += len(s)
+        if len(sents) > 0:
+            return summ / len(sents)
+        return 0.0
 Analyzer.register(SentLengthMetric())
 
 #### mittlere Tiefe des Syntaxbaumes
@@ -199,8 +207,10 @@ class AdverbModifierMetric(Metric):
         A = Analyzer.instance()
         corp = A.get(corpus=u"TIGER")
         tagger = corp.tagger(True)
-        tagged_words = tagger.tag(node.words())
-        word_count = len(tagged_words)
+        words = node.words()
+        words_no_no_words = [w for w in words if w not in NO_WORDS]
+        tagged_words = tagger.tag(words)
+        word_count = len(words_no_no_words)
         count = 0
         for w in tagged_words:
             if w[1] and u"ADV-MO" == w[1]:
@@ -251,12 +261,13 @@ class FillerMetric(Metric):
         if corp:
             fillers = corp.fillers()
         words = node.words()
+        words_no_no_words = [w for w in words if w not in NO_WORDS]
         filler_count = 0
         for w in words:
             if w in fillers:
                 filler_count += 1
-        if len(words) > 0:
-            return filler_count / float(len(words))
+        if len(words_no_no_words) > 0:
+            return float(filler_count) / len(words_no_no_words)
         return 0.0
 
 Analyzer.register(FillerMetric())
@@ -294,6 +305,7 @@ class SentenceLengthVariationMetric(Metric):
         sent_len_diff = 0
         last_sent = None
         for s in sents:
+            s = [w for w in s if w not in NO_WORDS]
             if last_sent is not None:
                 sent_len_diff += abs(len(last_sent) - len(s))
             last_sent = s

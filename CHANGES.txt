@@ -1,3 +1,7 @@
+0.3.1       2014/08/25
+
+ * Fix various metrics counting punctation as words.
+
 0.3.0
 
  * Fix division by zero in some metrics
