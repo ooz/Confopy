@@ -1,6 +1,10 @@
+0.3.2       2014/08/25
+
+ * Fix missing floating point division in sentlength metric
+
 0.3.1       2014/08/25
 
- * Fix various metrics counting punctation as words.
+ * Fix various metrics counting punctation as words
 
 0.3.0
 

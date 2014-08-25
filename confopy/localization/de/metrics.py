@@ -96,7 +96,7 @@ class SentLengthMetric(Metric):
             s = [w for w in s if w not in NO_WORDS]
             summ += len(s)
         if len(sents) > 0:
-            return summ / len(sents)
+            return float(summ) / len(sents)
         return 0.0
 Analyzer.register(SentLengthMetric())
 
