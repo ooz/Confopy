@@ -26,7 +26,7 @@ class Rule(Localizable):
         """
         return False
 
-    def message(self):
+    def message(self, node):
         return u""
 
 #    def __str__(self):
