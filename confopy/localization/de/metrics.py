@@ -154,8 +154,8 @@ Analyzer.register(ImpersonalStyleMetric())
 class PassiveConstructsMetric(ImpersonalStyleMetric):
     """docstring for PassiveConstructsMetric"""
     def __init__(self):
-        super(PassiveConstructsMetric, self).__init__(u"passiveconstructs", u"de", "Passivkonstrukte mit \"werden\"")
-        self.IMPERSONAL = [u"werden"]
+        super(PassiveConstructsMetric, self).__init__(u"passiveconstructs", u"de", "Passivkonstrukte mit \"wird\"/\"werden\"")
+        self.IMPERSONAL = [u"wird", u"werden"]
 Analyzer.register(PassiveConstructsMetric())
 
 ### Zeitform (Präsens), Anzahl der Verben in Präs. durch Gesamtanzahl an Verben
