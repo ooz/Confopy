@@ -1,3 +1,7 @@
+0.3.3       2014/09/06
+
+ * Add "wird" to passive constructs metric.
+
 0.3.2       2014/08/25
 
  * Fix missing floating point division in sentlength metric
