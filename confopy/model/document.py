@@ -198,7 +198,7 @@ class Node(object):
 ##################################################################
 
 class Float(Node):
-    DUMMY, FIGURE, TABLE, LISTING, DEFINITION, FORMULA, THEOREM, PROOF = range(8)
+    #DUMMY, FIGURE, TABLE, LISTING, DEFINITION, FORMULA, THEOREM, PROOF = range(8)
     def __init__(self, text=u"", number=u"", pagenr=u""):
         super(Float, self).__init__(text=text, pagenr=pagenr)
         self.number = number
