@@ -2,13 +2,22 @@
 # Using Hafer:
 # https://github.com/ooz/Hafer
 
+model:
+######
+
+[DocumentConverter
+|+to_Documents(xml_paths : list<unicode>) : list<Document>
+;+to_XML(doc : Document, pretty : bool, linesep : unicode, ident : unicode, header : bool)
+]
+
 model.document:
 ###############
 
 [Node
-|-parent   : Node
-;-children : list<Node>
+|+text : unicode
 ;+pagenr : unicode
+;-parent   : Node
+;-children : list<Node>
 |+parent() : Node
 ;+children() : list<Node>
 ;+is_root() : bool
@@ -17,29 +26,29 @@ model.document:
 ;+is_paragraph() : bool
 ;+is_float() : bool
 ;+is_footnote() : bool
-;+add_child(child : Node)
+;+add_child(child : Node, relation : int)
 ;+remove_child(child : Node)
 ;+sections() : list<Node>
 ;+paragraphs(recursive : bool) : list<Node>
 ;+floats(recursive : bool) : list<Node>
 ;+lines(recursive : bool, ignore_floats : bool) : list<unicode>
-;+text(recursive : bool, ignore_floats : bool) : unicode
+;+raw(recursive : bool, ignore_floats : bool) : unicode
 ;+words(recursive : bool, ignore_floats : bool) : list<unicode>
 ;+sents(recursive : bool, ignore_floats : bool) : list<list<unicode>>
 ]
 
 [Float
-|DUMMY
-;FIGURE
-;TABLE
-;LISTING
-;DEFINITION
-;FORMULA
-;THEOREM
-;PROOF
+#|DUMMY
+#;FIGURE
+#;TABLE
+#;LISTING
+#;DEFINITION
+#;FORMULA
+#;THEOREM
+#;PROOF
 #;+caption : unicode
 # label / key
-;+number : unicode
+|+number : unicode
 ]
 [Node]^--[Float]
 [Float]^--[Footnote]
@@ -98,9 +107,9 @@ analysis:
 #;+get_metric(ID : unicode) : Metric
 #;+get_rule  (ID : unicode) : Rule
 #;+get_report(ID : unicode) : Report
-;+metrics(lang : unicode) : dict<unicode, Metric>
-;+rules  (lang : unicode) : dict<unicode, Rule>  
-;+reports(lang : unicode) : dict<unicode, Report>
+;+metrics() : dict<unicode, Metric>
+;+rules  () : dict<unicode, Rule>  
+;+reports() : dict<unicode, Report>
 ;-languages() : list<unicode>
 ;+reportlist(lang : unicode) : unicode
 ;+metriclist(lang : unicode) : unicode
@@ -114,7 +123,10 @@ analysis:
 ]
 
 [Corpus
-|+fillers() : list<unicode>
+|+tagger() : object
+;+parser() : object
+;+sent_tokenizer() : object
+;+fillers() : list<unicode>
 ]
 [Localizable]^--[Corpus]
 [model.Document]^--[Corpus]
@@ -144,17 +156,32 @@ analysis:
 
 
 
-localization:
-#############
+localization.de:
+################
 
 [WordLengthMetric]--^[analysis.Metric]
 [SpellCheckMetric]--^[analysis.Metric]
+[LexiconMetric]--^[analysis.Metric]
 [SentLengthMetric]--^[analysis.Metric]
+[PersonalStyleMetric]--^[analysis.Metric]
+[ImpersonalStyleMetric]--^[analysis.Metric]
+[PassiveConstructsMetric]--^[analysis.Metric]
+[SimplePresentMetric]--^[analysis.Metric]
+[AdverbModifierMetric]--^[analysis.Metric]
+[DeadVerbsMetric]--^[analysis.Metric]
 [FillerMetric]--^[analysis.Metric]
+[ExampleCountMetric]--^[analysis.Metric]
+[SentenceLengthVariationMetric]--^[analysis.Metric]
 
 [MultiDocReport]--^[analysis.Report]
+[DocumentComparison]--^[analysis.Report]
 [DocumentReport]--^[analysis.Report]
 [DocumentDetailedReport]--^[analysis.Report]
+
+[IntroductionRule]--^[analysis.Rule]
+[SubsectionRule]--^[analysis.Rule]
+[FloatReferenceRule]--^[analysis.Rule]
+[FloatCaptionRule]--^[analysis.Rule]
 
 [TigerCorpusReader
 |+words(recursive : bool, tokenizer : object) : list<unicode>
@@ -166,7 +193,11 @@ localization:
 ;+parsed_sents() : list<nltk.Tree>
 ;+parsed_paras() : list<list<nltk.Tree>>
 ;+tagger(include_edgelabels : bool) : Tagger
+;+pcfg(include_edgelabels : bool) : Grammar
+;+cfg(include_edgelabels : bool) : Grammar
+;+parser(include_edgelabels : bool) : Parser
 ;+viterbi_parser(include_edgelabels : bool) : Parser
+;+sent_tokenizer() : Tokenizer
 ;+fillers() : list<unicode>
 ]--^[analysis.Corpus]
 
