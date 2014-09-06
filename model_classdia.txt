@@ -203,6 +203,17 @@ localization.de:
 
 
 
+pdfextract:
+###########
+
+[PDFMinerWrapper
+|+pdf2txt(filename : unicode) : unicode
+;+pdf2html(filename : unicode) : unicode
+;+pdf2xml(filename : unicode) : unicode
+]
+
+
+
 pdfextract.pdfminer_xml_bindings:
 #################################
 
@@ -247,10 +258,11 @@ pdfextract.pdfminer_xml_bindings:
 [TextBox
 |+ID : unicode
 ;+lines : list<unicode>
+;+line_count : int
 ;+font : tuple<unicode, unicode>
-;+emph : list<unicode>
 ;+word_count : int
 ;+character_count : int
+;+emph : list<unicode>
 #|+as_lines() : list<unicode>
 ]
 [Box]^--[TextBox]
@@ -267,40 +279,65 @@ pdfextract.pdfminer_xml_bindings:
 pdfextract.heuristics:
 ######################
 
+[HeuristicRegExes
+|PAGE_NR
+;SECTION_NR
+;FIGURE_CAP
+;TABLE_CAP
+;DEFINITION_CAP
+;FORMULA_CAP
+;THEOREM_CAP
+;PROOF_CAP
+|+compare_sections(a : unicode, b : unicode) : int
+]
+
 [HeuristicType
 |WORD_COUNT
 ;CONTENT
 ;FONT
 ;POSITION
+;FLOW
 ;GROUPING
 ;COMPLEX
 ]
 
 [TextboxType
 |NONE
-;TITLE
-;TOC
-;PAGENR
-;HEADER
-;FOOTER
+;SINGLE_NUMBER
+;TOC_LIST
 ;HEADING
 ;PARAGRAPH
-;PARAGRAPH_CONT
-;FLOATOBJ
-;FLOATCAP
+;FLOAT
+;FIGURE
+;TABLE
+;LISTING
+;DEFINITION
+;FORMULA
+;THEOREM
+;PROOF
+;PAGE_NR
+;PAGE_NR_OR_HEADING_PART
+;FLOAT_CAPTION_PART
+;HEADER_FOOTER
+;HEADING_PART_NUMBER
+;HEADING_PART_HEADING
+;PARAGRAPH_WITH_HEADING
+;TITLE
 ;FOOTNOTE
-;UNKNOWN
-#;TRASH
+|+is_float(tb_type : TextBoxType) : bool
+]
+
+[HeuristicManager
+|+generate_document(dom_pages : list<object>)
 ]
 
 [Heuristic
-|box_kinds : dict
-;+kind : HeuristicType
-|+apply(page_or_box)
+|+kind : HeuristicType
+|+apply(pages : list<Page>, page : Page, box : TextBox, hints : dict<TextBox, TextBoxType>)
 ]
 
-[Heuristic]--[Box]
-[Heuristic]--[Document]
+[SimpleDocumentHeuristic]--^[Heuristic]
+[SimpleLayoutHeuristic]--^[Heuristic]
 
 confopy:
 ########
