@@ -91,13 +91,6 @@ model.document:
 analysis:
 #########
 
-[RuleKind
-|DOCUMENT
-;SECTION
-;PARAGRAPH
-;FLOAT
-]
-
 [Analyzer
 |+instance(lang : unicode) : Analyzer
 #;+register(metric : Metric, rule : Rule, report : Report)
