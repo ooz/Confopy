@@ -389,6 +389,7 @@ def DOM2textbox(dom_textbox):
     all_sizes = reduce(join_lst, sizes, [])
     (primary_font, primary_size, emph) = find_emphasis(all_lines, all_fonts, all_sizes)
     lines = filter(lambda l: l.strip() != u"", lines)
+    lines = fix_separated_words(lines)
     return TextBox(ID, bbox, lines, (primary_font, primary_size), emph)
 
 def find_emphasis(line, fonts, sizes):
@@ -437,6 +438,38 @@ def emph_words(line, attributes):
             emph = emph + filter(lambda w: w != u"", emph_ws.split(u" "))
 
     return (primary_attr, emph)
+
+def fix_separated_words(lines):
+    """Helper function for DOM2textbox.
+    Combines word parts that are separated over 2 lines.
+    """
+    new_lines = list()
+    i = 0
+    take_from_new_lines = False
+    while i < len(lines):
+        l = lines[i].strip()
+        if take_from_new_lines:
+            l = new_lines[i]
+            new_lines.pop()
+            take_from_new_lines = False
+        if l.endswith(u"-"):
+            if i + 1 < len(lines):
+                next_l = lines[i + 1].strip()
+                if next_l is not u"":
+                    next_l_words = next_l.split()
+                    if len(next_l_words) > 0:
+                        if next_l[0].islower():
+                            l = l[:-1] + next_l_words[0]
+                        else:
+                            l = l + next_l_words[0]
+                        new_lines.append(l)
+                        l = u" ".join(next_l_words[1:])
+                        take_from_new_lines = True
+                        new_lines.append(l)
+        else:
+            new_lines.append(l)
+        i += 1
+    return new_lines
 
 
 def DOM2textgroup(dom_textgroup):
