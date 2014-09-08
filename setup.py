@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name="Confopy",
-    version="0.3.3",
+    version="0.3.4",
     url="https://github.com/ooz/Confopy",
     author="Oliver Zscheyge",
     author_email="oliverzscheyge@gmail.com",

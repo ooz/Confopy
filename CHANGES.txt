@@ -1,3 +1,7 @@
+0.3.4       2014/09/09
+
+ * Textextraction now recombines words separated by newlines
+
 0.3.3       2014/09/06
 
  * Add "wird" to passive constructs metric.
