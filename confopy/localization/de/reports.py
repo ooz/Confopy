@@ -145,19 +145,19 @@ class _MetricExpectation(object):
         self.msg_ok = msg_ok
 
 _METRIC_EXPECTATIONS = {
-    u"adverbmodifier":    _MetricExpectation(None       , 0.02 + 0.01, u"", u"Versuche weniger verstärkende/unpräzise Adverbien zu verwenden!"),
+    u"adverbmodifier":    _MetricExpectation(None       , 0.03 + 0.01, u"", u"Versuche weniger verstärkende/unpräzise Adverbien zu verwenden!"),
     u"deadverbs":         _MetricExpectation(None       , 0.03 + 0.03, u"", u"Versuche weniger tote Verben wie gehören, liegen, befinden, beinhalten, geben, bewirken etc. zu verwenden!"),
-    u"examplecount":      _MetricExpectation(1.74 - 1.73 , None       , u"Versuche mehr Beispiele zu nennen!", u""),
+    u"examplecount":      _MetricExpectation(1.83 - 0.83, None       , u"Versuche mehr Beispiele zu nennen!", u""),
     u"fillers":           _MetricExpectation(None       , 0.02 + 0.01, u"", u"Zu viele Füllwörter!"),
     u"impersonalstyle":   _MetricExpectation(None       , 0.02 + 0.03, u"", u"Zu viele Sätze mit 'man'."),
-    u"lexicon":           _MetricExpectation(0.49 - 0.05, 0.49 + 0.05, u"Zu geringer Wortschatz", u"Zu vielfältiger Wortschatz (viele Fremdwörter?)"),
-    u"passiveconstructs": _MetricExpectation(0.16 - 0.08, None       , u"Versuche mehr passive Sätze zu bilden!"),
+    u"lexicon":           _MetricExpectation(0.51 - 0.05, 0.51 + 0.05, u"Zu geringer Wortschatz", u"Zu vielfältiger Wortschatz (viele Fremdwörter?)"),
+    u"passiveconstructs": _MetricExpectation(None       , 0.27 + 0.1 , u"", u"Versuche mehr aktive Sätze zu bilden!"),
     u"personalstyle":     _MetricExpectation(None       , 0.03 + 0.03, u"", u"Zu persönlicher Schreibstil! Sätze mit 'ich', 'wir', 'sie' umschreiben!"),
-    u"sentlength":        _MetricExpectation(None       , 17.38 + 3.1, u"", u"Zu viele lange Sätze!"),
-    u"sentlengthvar":     _MetricExpectation(8.93 - 2.55, None       , u"Versuche kurze und lange Sätze mehr abzuwechseln!"),
-    u"simplepres":        _MetricExpectation(0.64 - 0.12, None       , u"Zu wenig Sätze sind in Präsenz geschrieben!"),
-    u"spellcheck":        _MetricExpectation(0.22 - 0.17, 0.22 + 0.17, u"Sehr armer Wortschatz!", u"Entweder zu viele Rechtschreibfehler oder zu viele Fremdwörter!"),
-    u"wordlength":        _MetricExpectation(None       , 5.81 + 0.38, u"", u"Versuche kürzere Wörter zu verwenden!"),
+    u"sentlength":        _MetricExpectation(None       , 14.6 + 2.78, u"", u"Zu viele lange Sätze!"),
+    u"sentlengthvar":     _MetricExpectation(7.68 - 2.41, None       , u"Versuche kurze und lange Sätze mehr abzuwechseln!"),
+    u"simplepres":        _MetricExpectation(0.8  - 0.06, None       , u"Zu wenig Sätze sind in Präsenz geschrieben!"),
+    u"spellcheck":        _MetricExpectation(0.15 - 0.05, 0.15 + 0.05, u"Sehr armer Wortschatz!", u"Entweder zu viele Rechtschreibfehler oder zu viele Fremdwörter!"),
+    u"wordlength":        _MetricExpectation(None       , 6.02 + 0.26, u"", u"Versuche kürzere Wörter zu verwenden!"),
 }
 
 class DocumentReport(Report):

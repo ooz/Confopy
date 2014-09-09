@@ -1,3 +1,8 @@
+0.3.5       2014/09/09
+
+ * Fix typo in the report "document"
+ * Update expected metric values in the report "document"
+
 0.3.4       2014/09/09
 
  * Textextraction now recombines words separated by newlines
