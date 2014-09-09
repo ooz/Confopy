@@ -154,7 +154,7 @@ _METRIC_EXPECTATIONS = {
     u"passiveconstructs": _MetricExpectation(0.16 - 0.08, None       , u"Versuche mehr passive Sätze zu bilden!"),
     u"personalstyle":     _MetricExpectation(None       , 0.03 + 0.03, u"", u"Zu persönlicher Schreibstil! Sätze mit 'ich', 'wir', 'sie' umschreiben!"),
     u"sentlength":        _MetricExpectation(None       , 17.38 + 3.1, u"", u"Zu viele lange Sätze!"),
-    u"sentlengthvar":     _MetricExpectation(8.93 - 2.55, None       , u"Versuche kürze und lange Sätze mehr abzuwechseln!"),
+    u"sentlengthvar":     _MetricExpectation(8.93 - 2.55, None       , u"Versuche kurze und lange Sätze mehr abzuwechseln!"),
     u"simplepres":        _MetricExpectation(0.64 - 0.12, None       , u"Zu wenig Sätze sind in Präsenz geschrieben!"),
     u"spellcheck":        _MetricExpectation(0.22 - 0.17, 0.22 + 0.17, u"Sehr armer Wortschatz!", u"Entweder zu viele Rechtschreibfehler oder zu viele Fremdwörter!"),
     u"wordlength":        _MetricExpectation(None       , 5.81 + 0.38, u"", u"Versuche kürzere Wörter zu verwenden!"),
