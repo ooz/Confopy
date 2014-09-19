@@ -27,10 +27,10 @@ Dependencies:
     sudo apt-get install python-pdfminer
 
     sudo pip install -U lxml
-    sudo pip install -U numpy
-    sudo pip install -U pyyaml nltk
-    sudo pip install -U pyenchant
-    sudo pip install -U pattern
+    sudo pip install numpy==1.6.2
+    sudo pip install pyyaml nltk==2.0.4
+    sudo pip install pyenchant==1.6.5
+    sudo pip install pattern==2.6
 
 Launch Confopy with
 
