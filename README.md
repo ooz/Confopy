@@ -44,6 +44,16 @@ Confopy needs a corpus (collection of language data) to run.
 
 For German (TIGER treebank):
 
+Automated download:
+
+    1. Go to 
+       <your python package directory>/confopy/localization/de/corpus\_de/
+    2. Execute the script
+       tiger_dl_patch.py
+       within that folder
+
+Manual download:
+
     1. Go to: 
        http://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/TIGERCorpus/license/htmlicense.html
     2. Accept the license and download TIGER-XML Release 2.2: 
