@@ -1,3 +1,7 @@
+0.3.8       2014/09/20
+
+ * Fix Numpy dependency
+
 0.3.7       2014/09/20
 
  * Make Confopy NLTK 3 compatible
