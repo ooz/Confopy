@@ -1,3 +1,7 @@
+0.3.9       2014/09/20
+
+ * Add script for automated download of the TIGER corpus
+
 0.3.8       2014/09/20
 
  * Fix Numpy dependency
