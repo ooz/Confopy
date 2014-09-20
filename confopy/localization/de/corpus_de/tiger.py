@@ -18,7 +18,7 @@ from lxml import etree
 import nltk
 from nltk.corpus.reader.api import CorpusReader
 from nltk.corpus import BracketParseCorpusReader
-from nltk.grammar import ContextFreeGrammar, Nonterminal, induce_pcfg
+from nltk.grammar import CFG, Nonterminal, induce_pcfg
 from nltk.tokenize.punkt import PunktTrainer, PunktSentenceTokenizer
 
 from confopy.analysis.corpus import Corpus
@@ -275,7 +275,7 @@ class TigerCorpusReader(Corpus):
     def cfg(self, include_edgelabels=True):
         sents = self.parsed_sents(include_edgelabels)
         tiger_prods = set(prod for sent in sents for prod in sent.productions())
-        cfg = ContextFreeGrammar(Nonterminal(TigerCorpusReader.GRAMMAR_START), list(tiger_prods))
+        cfg = CFG(Nonterminal(TigerCorpusReader.GRAMMAR_START), list(tiger_prods))
         return cfg
 
     def parser(self, include_edgelabels=True):

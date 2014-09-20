@@ -6,7 +6,7 @@ Description:
     General classes to represent a structured (scientific) document.
 '''
 
-from nltk import word_tokenize
+from nltk import wordpunct_tokenize
 
 ##################################################################
 # NODE SUPER CLASS
@@ -157,7 +157,7 @@ class Node(object):
             List of words.
         """
         words = list()
-        words.extend(word_tokenize(self.text))
+        words.extend(wordpunct_tokenize(self.text))
         for c in self._children:
             if c.is_section() and recursive:
                 words.extend(c.words(True, ignore_floats))
@@ -181,7 +181,7 @@ class Node(object):
             return list()
         full_text = self.raw(recursive, ignore_floats)
         sents = tokenizer.tokenize(full_text)
-        return [word_tokenize(s) for s in sents]
+        return [wordpunct_tokenize(s) for s in sents]
 
     def __unicode__(self):
         return "Node(children=%s)" % unicode(self._children)

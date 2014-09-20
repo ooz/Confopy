@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name="Confopy",
-    version="0.3.6",
+    version="0.3.7",
     url="https://github.com/ooz/Confopy",
     author="Oliver Zscheyge",
     author_email="oliverzscheyge@gmail.com",
@@ -19,8 +19,8 @@ setup(
     data_files = ["README.md"],
     install_requires=[
         "lxml >= 3.3.5",
-        "numpy == 1.6.2",
-        "nltk == 2.0.4",
+        "numpy >= 1.6.2",
+        "nltk >= 3.0.0",
         "Pattern == 2.6",
         "pyenchant == 1.6.5",
         "pdfminer == 20110515",
