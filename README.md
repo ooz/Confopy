@@ -28,47 +28,13 @@ Dependencies:
 
     sudo pip install -U lxml
     sudo pip install numpy==1.6.2
-    sudo pip install pyyaml nltk==2.0.4
+    sudo pip install pyyaml nltk==3.0.0
     sudo pip install pyenchant==1.6.5
     sudo pip install pattern==2.6
 
 Launch Confopy with
 
     python confopy/
-
-Issues with NLTK
-----------------
-
-If you get the following error while launching confopy:
-
-    Traceback (most recent call last):
-      File "/usr/local/bin/confopy", line 21, in <module>
-        from confopy.pdfextract import *
-      File "/usr/local/lib/python2.7/dist-packages/confopy/pdfextract/__init__.py",
-    line 6, in <module>
-        from confopy.pdfextract.convenience import PDF2XMLstring,
-    PDF2pages, PDF2document, PDFs2documents
-      File "/usr/local/lib/python2.7/dist-packages/confopy/pdfextract/convenience.py",
-    line 13, in <module>
-        from confopy.pdfextract.heuristics import HeuristicManager
-      File "/usr/local/lib/python2.7/dist-packages/confopy/pdfextract/heuristics.py",
-    line 12, in <module>
-        from confopy.model.document import Node, Document, Section,
-    Paragraph, Float, Footnote
-      File "/usr/local/lib/python2.7/dist-packages/confopy/model/__init__.py",
-    line 3, in <module>
-        from confopy.model.document import *
-      File "/usr/local/lib/python2.7/dist-packages/confopy/model/document.py",
-    line 9, in <module>
-        from nltk import word_tokenize
-      File "/usr/local/lib/python2.7/dist-packages/nltk/__init__.py", line
-    40, in <module>
-        __doc__ += '\n@version: ' + __version__
-    TypeError: unsupported operand type(s) for +=: 'NoneType' and 'str'
-
-Comment line 40 in the file:
-
-      /usr/local/lib/python2.7/dist-packages/nltk/__init__.py
 
 
 Getting a corpus
