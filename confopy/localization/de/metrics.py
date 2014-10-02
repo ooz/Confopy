@@ -102,6 +102,26 @@ Analyzer.register(SentLengthMetric())
 
 #### mittlere Tiefe des Syntaxbaumes
 
+### Lesbarkeit (ARI)
+class ARIMetric(Metric):
+    """Automated Readability Index
+    """
+    def __init__(self):
+        super(ARIMetric, self).__init__(u"ari", u"de", u"Automated Readability Index")
+
+    def evaluate(self, node):
+        words = [w for w in node.words() if w not in NO_WORDS]
+        A = Analyzer.instance()
+        corp = A.get(corpus=u"TIGER")
+        sents = node.sents(tokenizer=corp.sent_tokenizer())
+        char_count = float(sum([len(w) for w in words]))
+        word_count = float(len(words))
+        sent_count = float(len(sents))
+        if word_count > 0.0 and sent_count > 0.0:
+            return (word_count / sent_count) + 9 * (char_count / word_count)
+        return 0.0
+Analyzer.register(ARIMetric())
+
 
 
 # Special metrics for scientific texts

@@ -10,7 +10,7 @@ from confopy.analysis import Report, Analyzer, mean_stdev
 from confopy.analysis.rule import eval_doc
 
 
-METRIC_NAMES = [u"wordlength", u"spellcheck", u"lexicon", u"sentlength", u"personalstyle", u"impersonalstyle", u"passiveconstructs", u"simplepres", u"adverbmodifier", u"deadverbs", u"fillers", u"examplecount", u"sentlengthvar"]
+METRIC_NAMES = [u"wordlength", u"spellcheck", u"lexicon", u"sentlength", u"ari", u"personalstyle", u"impersonalstyle", u"passiveconstructs", u"simplepres", u"adverbmodifier", u"deadverbs", u"fillers", u"examplecount", u"sentlengthvar"]
 MAX_METRIC_STR_LEN = reduce(max, [len(name) for name in METRIC_NAMES])
 PAD = 2
 METRIC_COL_WIDTH = MAX_METRIC_STR_LEN + PAD
@@ -146,6 +146,7 @@ class _MetricExpectation(object):
 
 _METRIC_EXPECTATIONS = {
     u"adverbmodifier":    _MetricExpectation(None       , 0.03 + 0.01, u"", u"Versuche weniger verstärkende/unpräzise Adverbien zu verwenden!"),
+    u"ari":               _MetricExpectation(None       , 67.6 + 4.36, u"", u"Erschwerte Lesbarkeit (zu lange Wörter/Sätze!)"),
     u"deadverbs":         _MetricExpectation(None       , 0.03 + 0.03, u"", u"Versuche weniger tote Verben wie gehören, liegen, befinden, beinhalten, geben, bewirken etc. zu verwenden!"),
     u"examplecount":      _MetricExpectation(1.83 - 0.83, None       , u"Versuche mehr Beispiele zu nennen!", u""),
     u"fillers":           _MetricExpectation(None       , 0.02 + 0.01, u"", u"Zu viele Füllwörter!"),
