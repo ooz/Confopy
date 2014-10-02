@@ -1,3 +1,7 @@
+0.3.10      2014/10/02
+
+ * Add ARI metric
+
 0.3.9       2014/09/20
 
  * Add script for automated download of the TIGER corpus
