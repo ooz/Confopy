@@ -20,7 +20,7 @@ def lines2unicode(lines=[], strip=False, sep=u"\n"):
     """
     if strip:
         return reduce(lambda a, b: a.strip() + sep + b.strip(), lines, u"").strip()
-    return reduce(lambda a, b: a + sep + b, lines, u"")
+    return reduce(lambda a, b: a + sep + b, lines, u"")[1:]
 
 def is_empty(lines):
     """Checks whether a list of ustrings is empty.
@@ -111,9 +111,9 @@ if __name__ == '__main__':
     l0 = []
     l0_expected = u""
     l1 = [u"Hello World!"]
-    l1_expected = u"\nHello World!"
+    l1_expected = u"Hello World!"
     l2 = [u"Hello World,", u"how are you?", u"Sincerely", u"Universe"]
-    l2_expected = u"\nHello World,\nhow are you?\nSincerely\nUniverse"
+    l2_expected = u"Hello World,\nhow are you?\nSincerely\nUniverse"
     l3 = [u"    ", u"\n", u""]
 
     assert lines2unicode(l0) == l0_expected
