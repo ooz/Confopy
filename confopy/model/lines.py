@@ -106,24 +106,29 @@ def avg_words_per_line(lines):
 
 
 if __name__ == '__main__':
-    """lines.py test"""
+    print "Test for " + __file__
+
     l0 = []
+    l0_expected = u""
     l1 = [u"Hello World!"]
+    l1_expected = u"\nHello World!"
     l2 = [u"Hello World,", u"how are you?", u"Sincerely", u"Universe"]
+    l2_expected = u"\nHello World,\nhow are you?\nSincerely\nUniverse"
     l3 = [u"    ", u"\n", u""]
 
-    print lines2unicode(l0)
-    print lines2unicode(l1)
-    print lines2unicode(l2)
+    assert lines2unicode(l0) == l0_expected
+    assert lines2unicode(l1) == l1_expected
+    assert lines2unicode(l2) == l2_expected
 
     assert is_empty(l0)
     assert is_empty(l3)
     assert not is_empty(l1)
     assert not is_empty(l2)
 
-    h0 = [u"     42", u" The Meaning of Life and Everything"]
-    assert match(r"\d+", h0, True)
-    print lines2unicode(h0, True)
+    headline = [u"     42", u" The Meaning of Life and Everything"]
+    headline_expected = u"42\nThe Meaning of Life and Everything"
+    assert match(r"\d+", headline, True)
+    assert lines2unicode(headline, True) == headline_expected
 
     l4 = [u"x     2  ", u"  yz xz"]
     assert avg_word_length(l4) == 1.5
