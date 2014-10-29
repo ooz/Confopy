@@ -132,3 +132,8 @@ if __name__ == '__main__':
 
     l4 = [u"x     2  ", u"  yz xz"]
     assert avg_word_length(l4) == 1.5
+
+    # avg_words_per_line
+    assert avg_words_per_line(l0) == 0.0
+    assert avg_words_per_line(l2) == 1.75
+    assert avg_words_per_line(l4) == 2.0
