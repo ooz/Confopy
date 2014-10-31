@@ -120,15 +120,16 @@ class Node(object):
             recursive: Include lines from non-leaf child nodes.
             ignore_floats: Ignore floats and footnotes.
         """
-        lines = list()
-        for c in self._children:
-            if c.is_section() and recursive:
-                lines.extend(c.lines(True, ignore_floats))
-            elif (c.is_float() or c.is_footnote()) and not ignore_floats:
-                lines.extend(c.lines(recursive, False))
-            else:
-                lines.extend(c.lines(recursive, ignore_floats))
-        return lines
+        raise NotImplementedError
+#        lines = list()
+#        for c in self._children:
+#            if c.is_section() and recursive:
+#                lines.extend(c.lines(True, ignore_floats))
+#            elif (c.is_float() or c.is_footnote()) and not ignore_floats:
+#                lines.extend(c.lines(recursive, False))
+#            else:
+#                lines.extend(c.lines(recursive, ignore_floats))
+#        return lines
 
     def raw(self, recursive=True, ignore_floats=True):
         """Returns the text of this node as a single unicode string.
