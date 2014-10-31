@@ -277,15 +277,15 @@ class Section(Node):
 
     def __unicode__(self):
         if self.number is not u"":
-            return u"Section(number=%s, title=%s)" % (self.number, self.title)
+            return u"%s(number=%s, title=%s)" % (self.__class__.__name__, self.number, self.title)
         else:
-            return u"Section(title=%s)" % self.title
+            return u"%s(title=%s)" % (self.__class__.__name__, self.title)
 
     def __str__(self):
         if self.number is not u"":
-            return u"Section(number=%s, title=%s)" % (self.number.encode("utf8"), self.title.encode("utf8"))
+            return u"%s(number=%s, title=%s)" % (self.__class__.__name__, self.number.encode("utf8"), self.title.encode("utf8"))
         else:
-            return u"Section(title=%s)" % self.title.encode("utf8")
+            return u"%s(title=%s)" % (self.__class__.__name__, self.title.encode("utf8"))
 
 class Chapter(Section):
     def __init__(self, pagenr=u"", title=u"", number=u"", children=[]):
