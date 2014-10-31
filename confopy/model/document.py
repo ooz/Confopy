@@ -184,10 +184,10 @@ class Node(object):
         return [wordpunct_tokenize(s) for s in sents]
 
     def __unicode__(self):
-        return "Node(children=%s)" % unicode(self._children)
+        return u"%s(children=%s)" % (self.__class__.__name__, unicode(self._children))
 
     def __str__(self):
-        return "Node(children=%s)" % str(self._children)
+        return "%s(children=%s)" % (self.__class__.__name__, str(self._children))
 
     def __repr__(self):
         return self.__str__()
