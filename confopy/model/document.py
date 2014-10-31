@@ -386,11 +386,39 @@ class DocumentChecker(object):
 
 
 if __name__ == '__main__':
-    print "Demo for " + __file__
+    print u"Test for " + __file__
+
+    print u"  Building test document..."
     doc = Document()
-    sec = Section(title="FooTitle")
-    print doc
-    print sec
-    doc.add_child(sec)
-    print doc
-    print sec
+    sec1 = Section(title=u"1. Foo")
+    sec11 = Section(title=u"1.1 Bar")
+    sec12 = Section(title=u"1.2 Baz")
+    sec2 = Section(title=u"2. Raboof")
+    para0 = Paragraph(text=u"Intro text")
+    para1 = Paragraph(text=u"""\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id interdum. Ut dolor mauris, mollis quis sagittis at, viverra ac mauris. Phasellus pharetra dolor neque, sit amet ultricies nibh imperdiet lobortis. Fusce ac blandit ex, eu feugiat eros. Etiam nec erat enim. Fusce at metus ac dui sagittis laoreet. Nulla suscipit nisl ut lacus viverra, a vestibulum est lacinia. Aliquam finibus urna nunc, nec venenatis mi dictum eget. Etiam vitae ante quis neque aliquam vulputate id sit amet massa. Pellentesque elementum sapien non mauris laoreet cursus. Pellentesque at mauris id ipsum viverra egestas. Sed nec volutpat metus, vel sollicitudin ante. Pellentesque interdum justo vel ullamcorper dictum. Phasellus volutpat nibh eget arcu venenatis, a bibendum lorem mattis. Quisque in laoreet leo.""")
+    sec11.add_child(para1)
+    sec1.add_child(sec11)
+    sec1.add_child(sec12)
+    doc.add_child(para0)
+    doc.add_child(sec1)
+    doc.add_child(sec2)
+
+    print u"  Testing document hierarchy..."
+    assert len(doc.children()) == 3
+    assert len(doc.sections()) == 2
+    assert len(doc.paragraphs()) == 2
+    assert len(doc.paragraphs(recursive=False)) == 1
+    assert len(doc.floats()) == 0
+
+    print u"  Testing document text methods..."
+    assert len(doc.words()) == 150
+    assert len(doc.raw()) == 827
+
+    print u"  Testing DocumentChecker..."
+    doc_checker = DocumentChecker()
+    doc = doc_checker.cleanup(doc)
+    assert len(doc.words()) == 148
+    assert len(doc.raw()) == 816
+
+    print u"Passed all tests!"
