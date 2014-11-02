@@ -10,14 +10,15 @@ Name origin: Confopy := Conform + Python
 Installation
 ============
 
-Installation using pypi
------------------------
+Installation using pypi (preferred)
+-----------------------------------
 
     sudo pip install -U Confopy
 
 Launch Confopy with
 
-    confopy
+    confopy --help
+    confopy -r document your_paper.pdf
 
 Manual installation
 -------------------
@@ -34,7 +35,8 @@ Dependencies:
 
 Launch Confopy with
 
-    python confopy/
+    python confopy/ --help
+    python confopy/ -r document your_paper.pdf
 
 
 Getting a corpus
