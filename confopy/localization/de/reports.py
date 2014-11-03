@@ -164,8 +164,8 @@ _METRIC_EXPECTATIONS = {
 class DocumentReport(Report):
     """Overview over a single document.
     """
-    def __init__(self):
-        super(DocumentReport, self).__init__(u"document", u"de", u"Überblick über ein einzelnes Dokument")
+    def __init__(self, ID=u"document", lang=u"de", brief=u"Überblick über ein einzelnes Dokument"):
+        super(DocumentReport, self).__init__(ID, lang, brief)
 
     def execute(self, docs, args):
         if len(docs) < 1:
@@ -218,14 +218,25 @@ Analyzer.register(DocumentReport())
 
 
 
-class DocumentDetailedReport(Report):
+class SectionsReport(DocumentReport):
     """Detailed analysis of a single document.
     """
     def __init__(self):
-        super(DocumentDetailedReport, self).__init__(u"document-detail", u"de", u"Detaillierte Analyse eines Dokuments")
+        super(SectionsReport, self).__init__(u"sections", u"de", u"Abschnittsweise Analyse eines Dokuments")
 
     def execute(self, docs, args):
         output = list()
+        output.append(u"# Abschnittsweiser Bericht")
+        output.append(u"")
+        doc = docs[0]
+        sections = doc.sections()
+        for sec in sections:
+            output.append(u"## " + sec.title)
+            output.append(u"")
+            for metric_ID in sorted(_METRIC_EXPECTATIONS.keys()):
+                output.append(self._execute_metric(metric_ID, sec))
+            output.append(u"")
+
         return u"\n".join(output)
 
-Analyzer.register(DocumentDetailedReport())
+Analyzer.register(SectionsReport())
