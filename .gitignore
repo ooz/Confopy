@@ -4,6 +4,9 @@ Confopy.egg-info/
 confopy/localization/de/corpus_de/
 confopy/test/data/
 
+build/
+dist/
+
 data/
 doc/
 talk/
