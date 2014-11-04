@@ -6,7 +6,7 @@ Description:
     Class for converting Document objects to other representations.
 '''
 
-from xml.sax.saxutils import escape
+from confopy.pdfextract.xml_util import escape
 from lxml import etree
 
 from confopy.model.document import Node, Float, Paragraph, Section, Chapter, Document, Meta, Footnote
@@ -199,7 +199,7 @@ class DocumentConverter(object):
         buf = list()
         if sec.number != u"":
             buf.append(u' number="%s"' % escape(sec.number))
-        buf.append(u' title="%s"' % sec.title)
+        buf.append(u' title="%s"' % escape(sec.title))
         if sec.pagenr != u"":
             buf.append(u' pagenr="%s"' % escape(sec.pagenr))
         return u"".join(buf)
