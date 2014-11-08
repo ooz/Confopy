@@ -24,6 +24,8 @@ def lines2unicode(lines=[], strip=False, sep=u"\n"):
 
 def is_empty(lines):
     """Checks whether a list of ustrings is empty.
+    Args:
+        lines: List of unicode strings.
     Return:
         True if list is empty or contains whitespace strings only.
         False otherwise.
@@ -33,11 +35,26 @@ def is_empty(lines):
     return False
 
 def match(regex, lines, strip=False):
-    """Applies TODO"""
+    """Convenience method converting a list of lines to a single unicode
+    string then matching a regex.
+    Args:
+        regex: Regular expression.
+        lines: List of unicode strings.
+        strip: Boolean flag whether to strip each line from whitespace.
+    Return:
+        True if the text represented by lines matches regex. False otherwise.
+    """
     return re.match(regex, lines2unicode(lines, strip), re.U)
 
 def match_each(regex, lines, strip=False):
-    """Returns true if regex matches for each line."""
+    """Returns true if regex matches for each line.
+    Args:
+        regex: Regular expression.
+        lines: List of unicode strings.
+        strip: Boolean flag whether to strip each line from whitespace.
+    Return:
+        True if each line matches regex. False otherwise.
+    """
     for line in lines:
         if strip:
             line = line.strip()
@@ -49,7 +66,13 @@ def match_each(regex, lines, strip=False):
     return True
 
 def lines_using(lines, words, strip=False, sep=u" "):
-    """ lines_using
+    """
+    Args:
+        lines: List of unicode strings.
+        words: List of unicode strings.
+        strip: Boolean flag whether to strip each line from whitespace.
+        sep:   Unicode string indicating the separator between words in
+               the lines parameter.
     Return:
         The number of lines from the beginning being fully and only
         composed by words from parameter words.
@@ -68,6 +91,8 @@ def lines_using(lines, words, strip=False, sep=u" "):
 
 def words_using(lines, words, strip=False, sep=u" "):
     """
+    Args:
+        See #lines_using.
     Return:
         The number of consecutive words from the beginning that are
         contained in the parameter words.
@@ -85,6 +110,10 @@ def words_using(lines, words, strip=False, sep=u" "):
     return word_count
 
 def avg_word_length(lines):
+    """Computes the average word length.
+    Args:
+        lines: List of unicode strings.
+    """
     words = lines2unicode(lines, True, u" ").split()
     wc = 0.0
     wl = 0.0
@@ -98,6 +127,10 @@ def avg_word_length(lines):
     return 0.0
 
 def avg_words_per_line(lines):
+    """Computes the average amount of words per line.
+    Args:
+        lines: List of unicode strings.
+    """
     if len(lines) > 0:
         return reduce(operator.add, map(lambda line: len(line.split()), lines), 0) / float(len(lines))
     return 0.0
