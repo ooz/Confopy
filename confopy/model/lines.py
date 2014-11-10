@@ -149,6 +149,7 @@ if __name__ == '__main__':
     l2_expected = u"Hello World,\nhow are you?\nSincerely\nUniverse"
     l3 = [u"    ", u"\n", u""]
 
+    print u"  Testing unicode conversion..."
     assert lines2unicode(l0) == l0_expected
     assert lines2unicode(l1) == l1_expected
     assert lines2unicode(l2) == l2_expected
@@ -158,11 +159,13 @@ if __name__ == '__main__':
     assert not is_empty(l1)
     assert not is_empty(l2)
 
+    print u"  Testing match..."
     headline = [u"     42", u" The Meaning of Life and Everything"]
     headline_expected = u"42\nThe Meaning of Life and Everything"
     assert match(r"\d+", headline, True)
     assert lines2unicode(headline, True) == headline_expected
 
+    print u"  Testing avg word length and avg words per line..."
     l4 = [u"x     2  ", u"  yz xz"]
     assert avg_word_length(l4) == 1.5
 
@@ -170,3 +173,5 @@ if __name__ == '__main__':
     assert avg_words_per_line(l0) == 0.0
     assert avg_words_per_line(l2) == 1.75
     assert avg_words_per_line(l4) == 2.0
+
+    print u"Passed all tests!"
