@@ -11,7 +11,7 @@ import re
 
 from confopy.model.document import Node, Document, Section, Paragraph, Float, Footnote
 from confopy.model.document import DocumentChecker
-from confopy.model import match, match_each, avg_word_length, lines2unicode, lines_using, words_using
+from confopy.model.lines import match, match_each, avg_word_length, lines2unicode, lines_using, words_using
 from confopy.pdfextract.pdfminer_xml_bindings import find_primary_font
 
 
