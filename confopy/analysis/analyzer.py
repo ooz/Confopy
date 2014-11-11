@@ -176,7 +176,7 @@ class Analyzer(object):
 
 
 if __name__ == '__main__':
-    print "Demo for %s" % __file__
+    print u"Test for %s" % __file__
 
     analyzer = Analyzer.instance()
 
@@ -189,5 +189,14 @@ if __name__ == '__main__':
     analyzer.register(Report(u"test-fr3", u"fr"))
     assert len(analyzer.reports()) == 2
 
-    print analyzer.reportlist(u"de")
-    print analyzer.reportlist()
+    print u"  Testing report list..."
+    expected_reportlist = u"""\
+Reports for language "de":
+  test-de1    Wortlängenreport
+    \
+\n  test-de2    \
+\n    """
+    assert analyzer.reportlist(u"de") == expected_reportlist
+    assert analyzer.reportlist() == expected_reportlist
+
+    print u"Passed all tests!"
