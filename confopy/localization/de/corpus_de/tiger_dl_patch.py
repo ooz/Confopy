@@ -27,16 +27,16 @@ TARGET_ENC = "utf-8"
 
 
 def main():
-    print("By using this script you agree with the license at:")
-    print("http://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/TIGERCorpus/license/htmlicense.html")
-    print("Downloading and extracting TIGER corpus...")
+    print(u"By using this script you agree with the license at:")
+    print(u"http://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/TIGERCorpus/license/htmlicense.html")
+    print(u"Downloading and extracting TIGER corpus...")
     download_extract()
-    print("Converting the corpus to UTF-8 and fixing strings...")
+    print(u"Converting the corpus to UTF-8 and fixing strings...")
     convert_to_utf8()
     fix_strings()
-    print("Cleaning up downloaded and generated files...")
+    print(u"Cleaning up downloaded and generated files...")
     cleanup()
-    print("Done!")
+    print(u"Done!")
 
 def download_extract():
     urllib.urlretrieve(TIGER_URL, TIGER_PKG_FILE)
