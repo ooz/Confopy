@@ -27,6 +27,8 @@ TARGET_ENC = "utf-8"
 
 
 def main():
+    print("By using this script you agree with the license at:")
+    print("http://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/TIGERCorpus/license/htmlicense.html")
     print("Downloading and extracting TIGER corpus...")
     download_extract()
     print("Converting the corpus to UTF-8 and fixing strings...")
