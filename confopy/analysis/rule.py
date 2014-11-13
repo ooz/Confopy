@@ -42,7 +42,7 @@ def is_chapter(node):
     if isinstance(node, Chapter):
         return True
     elif isinstance(node, Section):
-        parent = node.parent
+        parent = node.parent()
         if parent is not None and isinstance(parent, Document):
             return True
     return False
@@ -54,7 +54,7 @@ def is_float(node):
     return node.is_float()
 
 def has_introduction(node):
-    children = node.children
+    children = node.children()
     if len(children) > 0:
         first_child = children[0]
         if isinstance(first_child, Paragraph):
