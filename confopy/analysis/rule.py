@@ -122,5 +122,55 @@ def eval_doc(document, rules):
 
 
 if __name__ == '__main__':
-    print "Demo for " + __file__
-    assert False, "woah, this isnt implemented yet!"
+    print u"Test for " + __file__
+
+    print u"  Building test document..."
+    doc = Document()
+    sec1 = Section(title=u"1. Foo")
+    sec11 = Section(title=u"1.1 Bar")
+    sec12 = Section(title=u"1.2 Baz")
+    sec2 = Section(title=u"2. Raboof")
+    para0 = Paragraph(text=u"Intro text")
+    para1 = Paragraph(text=u"""\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id interdum. Ut dolor mauris, mollis quis sagittis at, viverra ac mauris. Phasellus pharetra dolor neque, sit amet ultricies nibh imperdiet lobortis. Fusce ac blandit ex, eu feugiat eros. Etiam nec erat enim. Fusce at metus ac dui sagittis laoreet. Nulla suscipit nisl ut lacus viverra, a vestibulum est lacinia. Aliquam finibus urna nunc, nec venenatis mi dictum eget. Etiam vitae ante quis neque aliquam vulputate id sit amet massa. Pellentesque elementum sapien non mauris laoreet cursus. Pellentesque at mauris id ipsum viverra egestas. Sed nec volutpat metus, vel sollicitudin ante. Pellentesque interdum justo vel ullamcorper dictum. Phasellus volutpat nibh eget arcu venenatis, a bibendum lorem mattis. Quisque in laoreet leo.""")
+    para2 = Paragraph(text=u"Tabelle 1 zeigt Foobar.")
+    floatA = Float(text=u"Tabelle 1: Foo bar.")
+    floatB = Float(text=u"Tabelle 2: Foo bar baz bat.")
+
+    sec11.add_child(para1)
+    sec11.add_child(floatA)
+    sec11.add_child(para2)
+    sec12.add_child(floatB)
+    sec1.add_child(sec11)
+    sec1.add_child(sec12)
+    doc.add_child(para0)
+    doc.add_child(sec1)
+    doc.add_child(sec2)
+
+    print u"  Testing has_caption..."
+    assert not has_caption(floatA)
+    assert has_caption(floatB)
+
+    print u"  Testing is_referenced..."
+    assert is_referenced(floatA)
+    assert not is_referenced(floatB)
+
+    print u"  Testing count_subsections..."
+    assert count_subsections(doc) == 2
+    assert count_subsections(sec1) == 2
+    assert count_subsections(sec11) == 0
+    assert count_subsections(sec2) == 0
+    assert count_subsections(floatA) == 0
+
+    print u"  Testing has_introduction..."
+    assert has_introduction(doc)
+    assert not has_introduction(sec1)
+    assert not has_introduction(sec12)
+
+    print u"  Testing is_chapter..."
+    assert is_chapter(sec1)
+    assert is_chapter(sec2)
+    assert not is_chapter(sec11)
+    assert not is_chapter(floatA)
+
+    print u"Passed all tests!"

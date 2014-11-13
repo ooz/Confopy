@@ -6,5 +6,6 @@ python confopy/model/lines.py
 python confopy/model/document.py
 
 python confopy/analysis/analyzer.py
+python confopy/analysis/rule.py
 
 python confopy/test/test_pdfextract.py
