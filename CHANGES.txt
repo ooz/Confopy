@@ -1,3 +1,7 @@
+0.4.2       2014/11/14
+
+ * Fix bugs in some rule predicates
+
 0.4.1       2014/11/04
 
  * Fix unescaped XML characters in XML output
