@@ -1,3 +1,7 @@
+0.4.3       2014/11/15
+
+ * Speed up listing of reports/metrics (-rl, -ml commands)
+
 0.4.2       2014/11/14
 
  * Fix bugs in some rule predicates
