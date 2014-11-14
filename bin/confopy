@@ -124,13 +124,13 @@ def main(args):
 
     if args.reportlist:
         #import confopy.localization.reports
-        load_language(args.language)
+        load_language(args.language, True)
         analyzer = Analyzer.instance()
         output = analyzer.reportlist()
 
     if args.metriclist:
         #import confopy.localization.metrics
-        load_language(args.language)
+        load_language(args.language, True)
         analyzer = Analyzer.instance()
         output = analyzer.metriclist(args.language)
 
