@@ -74,19 +74,34 @@ def mean_stdev(values, ndigits=None):
 
 
 if __name__ == '__main__':
-    print u"TestCase for %s..." % __file__
+    print u"Test for %s" % __file__
     values = range(10)
-    mean = mean(values)
-    assert mean == 4.5
+
+    def assert_raises(fun, arg, msg):
+        try:
+            res = fun(arg)
+            assert False, msg
+        except ValueError:
+            pass
+
+    print u"  Testing mean and variance..."
+    m = mean(values)
+    assert m == 4.5
+    assert_raises(mean, [], u"Mean of empty list did not fail properly!")
     var = variance(values)
     assert var == 8.25
+    assert_raises(variance, [], u"Variance of empty list did not fail properly!")
+
+    print u"  Testing stdev..."
     stdev = stdev(values)
     assert stdev == math.sqrt(var)
     (mean2, stdev2) = mean_stdev(values)
-    assert mean == mean2
+    assert m == mean2
     assert stdev == stdev2
+
+    print u"  Testing mean_stdev rounding..."
     stats_rounded = mean_stdev(values, 2)
     assert stats_rounded == (4.5, 2.87)
-    print u"...all asserts passed!"
+    print u"Passed all tests!"
 
 
