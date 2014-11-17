@@ -86,22 +86,28 @@ if __name__ == '__main__':
 
     print u"  Testing mean and variance..."
     m = mean(values)
-    assert m == 4.5
-    assert_raises(mean, [], u"Mean of empty list did not fail properly!")
     var = variance(values)
+    assert m == 4.5
     assert var == 8.25
+    assert_raises(mean, [], u"Mean of empty list did not fail properly!")
     assert_raises(variance, [], u"Variance of empty list did not fail properly!")
+    assert_raises(variance, [42], u"Variance of 1 element list did not fail properly!")
 
-    print u"  Testing stdev..."
-    stdev = stdev(values)
-    assert stdev == math.sqrt(var)
+    print u"  Testing stdev and mean_stdev..."
+    sv = stdev(values)
     (mean2, stdev2) = mean_stdev(values)
+    assert sv == math.sqrt(var)
     assert m == mean2
-    assert stdev == stdev2
+    assert sv == stdev2
+    assert_raises(stdev, [], u"Stdev of empty list did not fail!")
+    assert_raises(stdev, [42], u"Stdev of 1 element list did not fail!")
+    assert_raises(mean_stdev, [], u"Mean_stdev of empty list did not fail!")
+    assert_raises(mean_stdev, [42], u"Mean_stdev of 1 element list did not fail!")
 
     print u"  Testing mean_stdev rounding..."
     stats_rounded = mean_stdev(values, 2)
     assert stats_rounded == (4.5, 2.87)
+
     print u"Passed all tests!"
 
 
