@@ -53,18 +53,6 @@ def test(args):
     #if ind < len(pages):
     #    pages[ind]._print()
 
-def metric_info(args, output=u""):
-    import confopy.localization.metrics
-    analyzer = Analyzer.instance()
-    metric = analyzer.get(metric=args.metric)
-    if metric is not None:
-        output += u"Metric %s (%s)\n" % (metric.ID, metric.language)
-        output += u" * Brief\n   %s\n" % metric.brief
-        output += u" * Description\n   %s" % metric.description
-    else:
-        output += u"There is no metric named %s (%s)" % (args.metric, args.language)
-    return output
-
 def validate(args, output=u""):
     confopy_dir = op.dirname(op.realpath(__file__))
     xsd_path = u"%s/model/confopy_document.xsd" % confopy_dir
@@ -119,20 +107,20 @@ def report(args, output=u""):
 def main(args):
     output = u""
 
-    if args.metric is not "":
-        output = metric_info(args)
-
     if args.reportlist:
         #import confopy.localization.reports
         load_language(args.language, True)
         analyzer = Analyzer.instance()
         output = analyzer.reportlist()
 
-    if args.metriclist:
+    elif args.metriclist:
         #import confopy.localization.metrics
         load_language(args.language, True)
         analyzer = Analyzer.instance()
         output = analyzer.metriclist(args.language)
+
+    elif args.rulelist:
+        raise NotImplementedError(u"Regelauflisting wird noch implementiert. :)")
 
     elif args.validate:
         output = validate(args)
@@ -165,9 +153,6 @@ if __name__ == "__main__":
     parser.add_argument("-lx", "--latex",
                         action="store_true", default=False,
                         help="Tell the specified report to format output as LaTeX (if supported by the report).")
-    parser.add_argument("-m", "--metric",
-                        type=str, default="",
-                        help="Prints info about a given metric.")
     parser.add_argument("-ml", "--metriclist",
                         action="store_true", default=False,
                         help="Lists all available metrics by language and exits.")
@@ -180,6 +165,9 @@ if __name__ == "__main__":
     parser.add_argument("-rl", "--reportlist",
                         action="store_true", default=False,
                         help="Lists all available reports by language and exits.")
+    parser.add_argument("-ul", "--rulelist",
+                        action="store_true", default=False,
+                        help="Lists all rules and exits.")
     parser.add_argument("-vl", "--validate",
                         action="store_true", default=False,
                         help="Validates a given XML against the XSD for the Confopy data model.")
