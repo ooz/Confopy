@@ -108,19 +108,19 @@ def main(args):
     output = u""
 
     if args.reportlist:
-        #import confopy.localization.reports
         load_language(args.language, True)
-        analyzer = Analyzer.instance()
+        analyzer = Analyzer.instance(args.language)
         output = analyzer.reportlist()
 
     elif args.metriclist:
-        #import confopy.localization.metrics
         load_language(args.language, True)
-        analyzer = Analyzer.instance()
+        analyzer = Analyzer.instance(args.language)
         output = analyzer.metriclist(args.language)
 
     elif args.rulelist:
-        raise NotImplementedError(u"Regelauflisting wird noch implementiert. :)")
+        load_language(args.language, True)
+        analyzer = Analyzer.instance(args.language)
+        output = analyzer.rulelist(args.language)
 
     elif args.validate:
         output = validate(args)

@@ -174,6 +174,23 @@ class Analyzer(object):
                 buf.append(u"")
         return u"\n".join(buf)
 
+    def rulelist(self, lang=u""):
+        """Returns a pretty formatted list of rules as a unicode string.
+        Return:
+            A unicode string.
+        """
+        buf = []
+        buf.append(u"Rules for language \"" + lang + u"\":")
+        keys = sorted(self._rules.keys())
+        pad_width = reduce(max, [len(k) for k in keys], 0) + 2 * len(Analyzer._PAD)
+        for k in keys:
+            rule = self._rules[k]
+            buf.append(u"%s%s%s" % (Analyzer._PAD, k.ljust(pad_width), rule.brief))
+            buf.append(u"%s%s%s" % (Analyzer._PAD, Analyzer._PAD, rule.description))
+            if rule.description is not u"":
+                buf.append(u"")
+        return u"\n".join(buf)
+
 
 if __name__ == '__main__':
     print u"Test for %s" % __file__
