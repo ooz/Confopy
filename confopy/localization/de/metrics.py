@@ -17,7 +17,9 @@ class WordLengthMetric(Metric):
     """Average word length of all words of a Node.
     """
     def __init__(self):
-        super(WordLengthMetric, self).__init__(u"wordlength", u"de", u"Word length")
+        super(WordLengthMetric, self).__init__(u"wordlength",
+                                               u"de",
+                                               u"Durchschnittliche Wortlänge")
 
     def evaluate(self, node):
         A = Analyzer.instance()
@@ -35,7 +37,11 @@ class SpellCheckMetric(Metric):
     """Number of spelling errors relative to number of all words.
     """
     def __init__(self):
-        super(SpellCheckMetric, self).__init__(u"spellcheck", u"de", u"Spell errors relative to #words")
+        super(SpellCheckMetric, self).__init__(u"spellcheck",
+                                               u"de",
+                                               u"-",
+                                               u"""\
+Anzahl an Rechtschreibfehlern relativ zur Gesamtanzahl aller Wörter.""")
 
     def evaluate(self, node):
         """Value range: [0.0, 1.0]
@@ -58,7 +64,11 @@ class LexiconMetric(Metric):
     """Number of unique words (lemmata) relative to total number of words.
     """
     def __init__(self):
-        super(LexiconMetric, self).__init__(u"lexicon", u"de", u"Number of unique lemmata relative to total #words.")
+        super(LexiconMetric, self).__init__(u"lexicon",
+                                            u"de",
+                                            u"-",
+                                            u"""\
+Anzahl einzigartiger Lemmata relativ zur Gesamtanzahl aller Wörter.""")
 
     def evaluate(self, node):
         words = node.words()
@@ -85,7 +95,9 @@ class SentLengthMetric(Metric):
     """Average sentence length.
     """
     def __init__(self):
-        super(SentLengthMetric, self).__init__(u"sentlength", u"de", u"Average sentence length")
+        super(SentLengthMetric, self).__init__(u"sentlength",
+                                               u"de",
+                                               u"Durchschnittliche Satzlänge")
 
     def evaluate(self, node):
         A = Analyzer.instance()
@@ -107,7 +119,11 @@ class ARIMetric(Metric):
     """Automated Readability Index
     """
     def __init__(self):
-        super(ARIMetric, self).__init__(u"ari", u"de", u"Automated Readability Index")
+        super(ARIMetric, self).__init__(u"ari",
+                                        u"de",
+                                        u"Automated Readability Index",
+                                        u"""\
+Je größer der Wert, desto anspruchsvoller ist der Text.""")
 
     def evaluate(self, node):
         words = [w for w in node.words() if w not in NO_WORDS]
@@ -132,7 +148,12 @@ class PersonalStyleMetric(Metric):
     PERSONAL = [u"ich", u"wir", u"sie"]
 
     def __init__(self):
-        super(PersonalStyleMetric, self).__init__(u"personalstyle", u"de", u"Persönlicher Schreibstil", u"Vorkommen von 'ich', 'wir', 'sie' relativ zur Satzanzahl.")
+        super(PersonalStyleMetric, self).__init__(u"personalstyle",
+                                                  u"de",
+                                                  u"Persönlicher Schreibstil",
+                                                  u"""\
+Vorkommen von 'ich', 'wir', 'sie' relativ zur Satzanzahl.
+    Je kleiner der Wert, desto besser.""")
 
     def evaluate(self, node):
         words = node.words()
@@ -151,8 +172,14 @@ Analyzer.register(PersonalStyleMetric())
 
 #### durchschnittliche Anzahl von Passiv-/"Man"-Konstrukten pro Satz
 class ImpersonalStyleMetric(Metric):
-    def __init__(self, ID=u"impersonalstyle", lang=u"de", description=u"Unpersönlicher Schreibstil"):
-        super(ImpersonalStyleMetric, self).__init__(ID, lang, description)
+    def __init__(self,
+                 ID=u"impersonalstyle",
+                 lang=u"de",
+                 brief=u"Unpersönlicher Schreibstil",
+                 description=u"""\
+Anzahl an 'man' relativ zur Satzanzahl.
+    Je kleiner der Wert, desto besser."""):
+        super(ImpersonalStyleMetric, self).__init__(ID, lang, brief, description)
         self.IMPERSONAL = [u"man"]
 
     def evaluate(self, node):
@@ -174,14 +201,24 @@ Analyzer.register(ImpersonalStyleMetric())
 class PassiveConstructsMetric(ImpersonalStyleMetric):
     """docstring for PassiveConstructsMetric"""
     def __init__(self):
-        super(PassiveConstructsMetric, self).__init__(u"passiveconstructs", u"de", "Passivkonstrukte mit \"wird\"/\"werden\"")
+        super(PassiveConstructsMetric, self).__init__(u"passiveconstructs",
+                                                      u"de",
+                                                      "Passivkonstrukte mit 'wird'/'werden'",
+                                                      u"""\
+Anzahl an 'wird'/'werden' relativ zur Satzanzahl.
+    Je kleiner der Wert, desto besser.""")
         self.IMPERSONAL = [u"wird", u"werden"]
 Analyzer.register(PassiveConstructsMetric())
 
 ### Zeitform (Präsens), Anzahl der Verben in Präs. durch Gesamtanzahl an Verben
 class SimplePresentMetric(Metric):
     def __init__(self):
-        super(SimplePresentMetric, self).__init__(u"simplepres", u"de", u"Verben im Präsenz im Verhältnis zu #verbs")
+        super(SimplePresentMetric, self).__init__(u"simplepres",
+                                                  u"de",
+                                                  u"Verben im Präsenz",
+                                                  u"""\
+Anzahl an Verben im Präsenz relativ zur Gesamtanzahl aller Verben.
+    Je höher der Wert, desto besser.""")
 
     def evaluate(self, node):
         A = Analyzer.instance()
@@ -221,7 +258,12 @@ class AdverbModifierMetric(Metric):
     """
     """
     def __init__(self):
-        super(AdverbModifierMetric, self).__init__(u"adverbmodifier", u"de", u"Verstärkende/unpräzise Adverbien")
+        super(AdverbModifierMetric, self).__init__(u"adverbmodifier",
+                                                   u"de",
+                                                   u"Verstärkende/unpräzise Adverbien",
+                                                   u"""\
+Anzahl verstärkender Adverbien relativ zur Gesamtanzahl aller Wörter.
+    Je kleiner der Wert, desto besser.""")
 
     def evaluate(self, node):
         A = Analyzer.instance()
@@ -244,8 +286,26 @@ Analyzer.register(AdverbModifierMetric())
 ### Vermeidung toter Verben (Gehören, liegen, beinhalten)
 class DeadVerbsMetric(Metric):
     """docstring for DeadVerbsMetric"""
-    def __init__(self, ID=u"deadverbs", lang=u"de", description=u"Anzahl toter Verben"):
-        super(DeadVerbsMetric, self).__init__(ID, lang, description)
+    def __init__(self,
+                 ID=u"deadverbs",
+                 lang=u"de",
+                 brief=u"Anzahl toter Verben",
+                 description=u"""\
+Relativ zur Satzanzahl. Tote Verben sind folgende:
+      * gehören
+      * liegen
+      * beinhalten
+      * enthalten
+      * befinden
+      * geben
+      * bewirken
+      * bewerkstelligen
+      * vergegenwärtigen
+    Je kleiner der Wert, desto besser."""):
+        super(DeadVerbsMetric, self).__init__(ID,
+                                              lang,
+                                              brief,
+                                              description)
         # weitere tote Verben aus:
         #  http://www.marcoprestel.de/stil12.html
         self.VERBS = [u"gehören", u"liegen", u"beinhalten", u"enthalten", u"befinden", u"geben", u"bewirken", u"bewerkstelligen", u"vergegenwärtigen"]
@@ -272,7 +332,12 @@ class FillerMetric(Metric):
     """Number of fillers relative to total number of words of a given Node.
     """
     def __init__(self):
-        super(FillerMetric, self).__init__(u"fillers", u"de", u"Analysiert Füllwortdichte", u"")
+        super(FillerMetric, self).__init__(u"fillers",
+                                           u"de",
+                                           u"Füllwortdichte",
+                                           u"""\
+Anzahl an Füllwörtern relativ zur Gesamtanzahl aller Wörter.
+    Je kleiner der Wert, desto besser.""")
 
     def evaluate(self, node):
         A = Analyzer.instance()
@@ -298,7 +363,11 @@ Analyzer.register(FillerMetric())
 class ExampleCountMetric(Metric):
     BSP_INDICATORS = [u"beispiel", u"bsp", u"bsp.", u"zb", u"z.b.", u"beispielsweise", u"bspw", u"bspw."]
     def __init__(self):
-        super(ExampleCountMetric, self).__init__(u"examplecount", u"de", u"Zählt Beispiele")
+        super(ExampleCountMetric, self).__init__(u"examplecount",
+                                                 u"de",
+                                                 u"Beispielanzahl",
+                                                 u"""\
+Je größer der Wert, desto besser.""")
 
     def evaluate(self, node):
         words = node.words()
@@ -316,7 +385,10 @@ class SentenceLengthVariationMetric(Metric):
     """Determines the variation of sentence length of subsequent sentences.
     """
     def __init__(self):
-        super(SentenceLengthVariationMetric, self).__init__(u"sentlengthvar", u"de", u"Variation der Satzlänge", u"")
+        super(SentenceLengthVariationMetric, self).__init__(u"sentlengthvar",
+                                                            u"de",
+                                                            u"Variation der Satzlänge",
+                                                            u"Je größer der Wert, desto besser.")
 
     def evaluate(self, node):
         A = Analyzer.instance()
