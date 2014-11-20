@@ -20,7 +20,15 @@ class MultiDocReport(Report):
     """Overview/statistics for multiple documents.
     """
     def __init__(self):
-        super(MultiDocReport, self).__init__(u"multidoc", u"de", u"Überblick über mehrere Dokumente")
+        super(MultiDocReport, self).__init__(u"multidoc",
+                                             u"de",
+                                             u"Überblick über mehrere Dokumente",
+                                             u"""\
+Evaluiert die Metriken für mehrere Dokument, berechnet den Durchschnitt
+    und die Standardabweichung.
+    Listet in der letzten Spalte die Metrikwerte des TIGER-Corpus (deutsche
+    Sprachreferenz).
+    Unterstützt die Option --latex.""")
 
     def execute(self, docs, args):
         output = list()
@@ -68,7 +76,17 @@ class DocumentComparison(Report):
     PAD = 2
 
     def __init__(self):
-        super(DocumentComparison, self).__init__(u"doccomp", u"de", u"Vergleicht 2 Dokumente")
+        super(DocumentComparison, self).__init__(u"doccomp",
+                                                 u"de",
+                                                 u"Vergleicht Vorher-/Nachher-Versionen",
+                                                 u"""\
+Benötigt eine gerade Anzahl n an Dokumenten (mind. 2).
+    Vergleicht das erste Dokument mit dem (n / 2) + 1-sten Dokument usw.
+    Bei 2 Dokumenten werden jeweils die Metriken bestimmt und gegenüber-
+    gestellt.
+    Bei mehr als 2 Dokumenten wird gezählt, wie häufig sich Metrikwerte
+    verringert/erhöht haben oder gleich geblieben sind.
+    Unterstützt die Option --latex.""")
 
     def _compare(self, vals):
         return u"="
@@ -164,8 +182,13 @@ _METRIC_EXPECTATIONS = {
 class DocumentReport(Report):
     """Overview over a single document.
     """
-    def __init__(self, ID=u"document", lang=u"de", brief=u"Überblick über ein einzelnes Dokument"):
-        super(DocumentReport, self).__init__(ID, lang, brief)
+    def __init__(self,
+                 ID=u"document",
+                 lang=u"de",
+                 brief=u"Überblick über ein einzelnes Dokument",
+                 description=u"""\
+Berechnet die Metriken für ein Dokument und überorüft die Regeln."""):
+        super(DocumentReport, self).__init__(ID, lang, brief, description)
 
     def execute(self, docs, args):
         if len(docs) < 1:
@@ -222,7 +245,11 @@ class SectionsReport(DocumentReport):
     """Detailed analysis of a single document.
     """
     def __init__(self):
-        super(SectionsReport, self).__init__(u"sections", u"de", u"Abschnittsweise Analyse eines Dokuments")
+        super(SectionsReport, self).__init__(u"sections",
+                                             u"de",
+                                             u"Abschnittsweise Analyse eines Dokuments",
+                                             u"""\
+Berechnet die Metriken für jedes Kapitel einzeln.""")
 
     def execute(self, docs, args):
         output = list()
