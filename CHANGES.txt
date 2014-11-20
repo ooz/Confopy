@@ -1,8 +1,12 @@
+0.4.5       2014/11/20
+
+ * Add descriptions for german metrics and reports
+
 0.4.4       2014/11/18
 
- * Add -ul command to list all available rules.
- * Remove obsolete -m option. Use -ml instead.
- * Add tests to the statistics module.
+ * Add -ul command to list all available rules
+ * Remove obsolete -m option. Use -ml instead
+ * Add tests to the statistics module
 
 0.4.3       2014/11/15
 
