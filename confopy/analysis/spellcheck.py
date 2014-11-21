@@ -50,9 +50,17 @@ class SpellChecker(object):
 
 
 if __name__ == '__main__':
-    print u"TestCase for %s..." % __file__
+    print u"Test for %s" % __file__
+
+    print u"  Testing SpellChecker..."
     checker = SpellChecker(u"de")
-    word = u"Hello"
-    assert not checker.check(word)
-    assert len(checker.suggest(word)) == 6
-    print u"...passed all asserts!"
+    word_de = u"Hallo"
+    word_en = u"Hello"
+    assert checker.check(word_de)
+    assert not checker.check(word_en)
+    assert len(checker.suggest(word_en)) == 6
+
+    print u"  Testing list_languages..."
+    assert list_languages() == [u"de", u"en"]
+
+    print u"Passed all tests!"
