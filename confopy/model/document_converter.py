@@ -225,3 +225,43 @@ class DocumentConverter(object):
         if flt.pagenr != u"":
             buf.append(u' pagenr="%s"' % escape(flt.pagenr))
         return u"".join(buf)
+
+
+
+if __name__ == '__main__':
+    print u"Test for %s" % __file__
+
+    print u"  Building test document..."
+    doc = Document()
+    sec1 = Section(title=u"1. Foo")
+    sec11 = Section(title=u"1.1 Bar")
+    sec12 = Section(title=u"1.2 Baz")
+    sec2 = Section(title=u"2. Raboof")
+    para0 = Paragraph(text=u"Intro text")
+    para1 = Paragraph(text=u"""\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id interdum. Ut dolor mauris, mollis quis sagittis at, viverra ac mauris. Phasellus pharetra dolor neque, sit amet ultricies nibh imperdiet lobortis. Fusce ac blandit ex, eu feugiat eros. Etiam nec erat enim. Fusce at metus ac dui sagittis laoreet. Nulla suscipit nisl ut lacus viverra, a vestibulum est lacinia. Aliquam finibus urna nunc, nec venenatis mi dictum eget. Etiam vitae ante quis neque aliquam vulputate id sit amet massa. Pellentesque elementum sapien non mauris laoreet cursus. Pellentesque at mauris id ipsum viverra egestas. Sed nec volutpat metus, vel sollicitudin ante. Pellentesque interdum justo vel ullamcorper dictum. Phasellus volutpat nibh eget arcu venenatis, a bibendum lorem mattis. Quisque in laoreet leo.""")
+    para2 = Paragraph(text=u"Tabelle 1 zeigt Foobar.")
+    floatA = Float(text=u"Tabelle 1: Foo bar.")
+    floatB = Float(text=u"Tabelle 2: Foo bar baz bat.")
+
+    sec11.add_child(para1)
+    sec11.add_child(floatA)
+    sec11.add_child(para2)
+    sec12.add_child(floatB)
+    sec1.add_child(sec11)
+    sec1.add_child(sec12)
+    doc.add_child(para0)
+    doc.add_child(sec1)
+    doc.add_child(sec2)
+
+    print u"  Testing Document2XML conversion..."
+    doc_conv = DocumentConverter()
+    xml = doc_conv.to_XML(doc, True)
+    xml_expected = u'<?xml version="1.0" encoding="utf-8" ?>\n<document>\n  <paragraph>\nIntro text\n  </paragraph>\n  <section title="1. Foo">\n    <section title="1.1 Bar">\n      <paragraph>\nLorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id interdum. Ut dolor mauris, mollis quis sagittis at, viverra ac mauris. Phasellus pharetra dolor neque, sit amet ultricies nibh imperdiet lobortis. Fusce ac blandit ex, eu feugiat eros. Etiam nec erat enim. Fusce at metus ac dui sagittis laoreet. Nulla suscipit nisl ut lacus viverra, a vestibulum est lacinia. Aliquam finibus urna nunc, nec venenatis mi dictum eget. Etiam vitae ante quis neque aliquam vulputate id sit amet massa. Pellentesque elementum sapien non mauris laoreet cursus. Pellentesque at mauris id ipsum viverra egestas. Sed nec volutpat metus, vel sollicitudin ante. Pellentesque interdum justo vel ullamcorper dictum. Phasellus volutpat nibh eget arcu venenatis, a bibendum lorem mattis. Quisque in laoreet leo.\n      </paragraph>\n            <float>\nTabelle 1: Foo bar.\n      </float>\n      <paragraph>\nTabelle 1 zeigt Foobar.\n      </paragraph>\n    </section>\n    <section title="1.2 Baz">\n            <float>\nTabelle 2: Foo bar baz bat.\n      </float>\n    </section>\n  </section>\n  <section title="2. Raboof">\n  </section>\n</document>'
+    assert xml == xml_expected
+
+    xml = doc_conv.to_XML(doc, False)
+    xml_expected = u'<?xml version="1.0" encoding="utf-8" ?><document>  <paragraph>Intro text  </paragraph>  <section title="1. Foo">    <section title="1.1 Bar">      <paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id interdum. Ut dolor mauris, mollis quis sagittis at, viverra ac mauris. Phasellus pharetra dolor neque, sit amet ultricies nibh imperdiet lobortis. Fusce ac blandit ex, eu feugiat eros. Etiam nec erat enim. Fusce at metus ac dui sagittis laoreet. Nulla suscipit nisl ut lacus viverra, a vestibulum est lacinia. Aliquam finibus urna nunc, nec venenatis mi dictum eget. Etiam vitae ante quis neque aliquam vulputate id sit amet massa. Pellentesque elementum sapien non mauris laoreet cursus. Pellentesque at mauris id ipsum viverra egestas. Sed nec volutpat metus, vel sollicitudin ante. Pellentesque interdum justo vel ullamcorper dictum. Phasellus volutpat nibh eget arcu venenatis, a bibendum lorem mattis. Quisque in laoreet leo.      </paragraph>            <float>Tabelle 1: Foo bar.      </float>      <paragraph>Tabelle 1 zeigt Foobar.      </paragraph>    </section>    <section title="1.2 Baz">            <float>Tabelle 2: Foo bar baz bat.      </float>    </section>  </section>  <section title="2. Raboof">  </section></document>'
+    assert xml == xml_expected
+
+    print u"Passed all tests!"

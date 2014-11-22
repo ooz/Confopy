@@ -4,6 +4,7 @@ export PYTHONPATH=$PYTHONPATH:./:confopy/
 
 python confopy/model/lines.py
 python confopy/model/document.py
+python confopy/model/document_converter.py
 
 python confopy/analysis/analyzer.py
 python confopy/analysis/rule.py
