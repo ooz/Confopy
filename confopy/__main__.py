@@ -15,11 +15,11 @@ import sys
 sys.path.append(op.split(op.dirname(op.realpath(__file__)))[:-1][0])
 
 import argparse as AP
-from lxml import etree
 
 import confopy.config as C
 from confopy.pdfextract import *
 from confopy.model import DocumentConverter
+from confopy.model.validate import validate
 from confopy.analysis import Analyzer
 
 from confopy.localization import load_language
@@ -52,19 +52,6 @@ def test(args):
     #ind = 1
     #if ind < len(pages):
     #    pages[ind]._print()
-
-def validate(args, output=u""):
-    confopy_dir = op.dirname(op.realpath(__file__))
-    xsd_path = u"%s/model/confopy_document.xsd" % confopy_dir
-    for f in args.files:
-        xsd_doc = etree.parse(xsd_path)
-        xml_schema = etree.XMLSchema(xsd_doc)
-        doc = etree.parse(f)
-        if xml_schema.validate(doc):
-            output = output + "%s is a valid instance of %s!\n" % (f, xsd_path)
-        else:
-            output = output + "%s is invalid according to %s!\n\nError(s):\n%s\n" % (f, xsd_path, xml_schema.error_log)
-    return output
 
 def pdf2xml(args, output=u""):
     dc = DocumentConverter()
@@ -123,7 +110,7 @@ def main(args):
         output = analyzer.rulelist(args.language)
 
     elif args.validate:
-        output = validate(args)
+        output = validate(args.files)
 
     elif args.xml:
         output = pdf2xml(args)
