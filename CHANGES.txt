@@ -1,3 +1,7 @@
+0.4.6       2014/11/24
+
+ * Fix validation of Confopy XML documents
+
 0.4.5       2014/11/20
 
  * Add descriptions for german metrics and reports

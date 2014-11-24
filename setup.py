@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name="Confopy",
-    version="0.4.5",
+    version="0.4.6",
     url="https://github.com/ooz/Confopy",
     author="Oliver Zscheyge",
     author_email="oliverzscheyge@gmail.com",
@@ -13,7 +13,9 @@ setup(
     license="MIT License",
     description="Evaluates the linguistic and structural quality of scientific texts.",
     long_description=open("README.md").read(),
-    package_data={"": ["README.md", "bin/confopy"]},
+    package_dir={"confopy.model": "confopy/model"},
+    package_data={"": ["README.md", "bin/confopy"],
+                  "confopy.model": ["confopy_document.xsd"]},
     include_package_data=True,
     scripts=["bin/confopy"],
     data_files = ["README.md"],
