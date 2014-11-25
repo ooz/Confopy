@@ -11,7 +11,13 @@ import os.path as op
 from lxml import etree
 
 def validate(files):
-    xsd_path = u"%s/confopy_document.xsd" % op.dirname(op.realpath(__file__))
+    """Validates XML files according to the Confopy data model XML schema.
+    Args:
+        files: A list of file paths. The XML documents to validate.
+    Return:
+        A string message indicating the successful validation or listing all errors.
+    """
+    xsd_path = u"%s/c"""onfopy_document.xsd" % op.dirname(op.realpath(__file__))
     output = u""
     for f in files:
         xsd_doc = etree.parse(xsd_path)
