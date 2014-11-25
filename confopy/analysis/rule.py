@@ -173,4 +173,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id
     assert not is_chapter(sec11)
     assert not is_chapter(floatA)
 
+    print u"  Testing eval_doc..."
+    class IntroductionRule(Rule):
+        def __init__(self,
+                     ID=u"introduction",
+                     language=u"de",
+                     brief=u"Kapiteleinleitungen",
+                     description=u"Kapitel müssen eine Einleitung haben"):
+            super(IntroductionRule, self).__init__(ID, language, brief, description)
+        def evaluate(self, node):
+            return not is_chapter(node) or has_introduction(node)
+        def message(self, node):
+            return u"Kapitel \"%s\" hat keine Einleitung!" % node.title
+    rules = []
+    rules.append(IntroductionRule())
+    msgs = eval_doc(doc, rules)
+    msgs_expected = [u'Kapitel "1. Foo" hat keine Einleitung!',
+                     u'Kapitel "2. Raboof" hat keine Einleitung!']
+    assert msgs == msgs_expected
+
     print u"Passed all tests!"
