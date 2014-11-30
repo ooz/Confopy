@@ -1,8 +1,10 @@
 Confopy
 =======
 
-Asserting the linguistic and structural quality of scientific texts.
-Written in Python.
+Asserts the linguistic and structural quality of scientific texts.
+
+Confopy is a command-line tool that accepts one or multiple PDF documents and prints textual reports.
+Currently it only works for German papers.
 
 Name origin: Confopy := Conform + Python 
 
