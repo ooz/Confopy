@@ -39,6 +39,41 @@ Launch Confopy with
     python confopy/ -r document your_paper.pdf
 
 
+Usage
+=====
+
+    $ confopy -h
+    usage: confopy [-h] [-l LANGUAGE] [-lx] [-ml] [-o OUTFILE] [-r REPORT] [-rl]
+                   [-ul] [-vl] [-x]
+                   [file [file ...]]
+
+    Language and structure checker for scientific documents.
+
+    positional arguments:
+      file                  Document file to analyze (PDF).
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -l LANGUAGE, --language LANGUAGE
+                            Language to use for PDF extraction and document
+                            analysis. Default: de
+      -lx, --latex          Tell the specified report to format output as LaTeX
+                            (if supported by the report).
+      -ml, --metriclist     Lists all available metrics by language and exits.
+      -o OUTFILE, --outfile OUTFILE
+                            File to write the output too. Default: terminal
+                            (stdout).
+      -r REPORT, --report REPORT
+                            Analyses the given document according to the specified
+                            report.
+      -rl, --reportlist     Lists all available reports by language and exits.
+      -ul, --rulelist       Lists all rules and exits.
+      -vl, --validate       Validates a given XML against the XSD for the Confopy
+                            data model.
+      -x, --xml             Converts the PDF file(s) to Confopy XML (structure
+                            orientated).
+
+
 Getting a corpus
 ================
 
