@@ -46,7 +46,9 @@ Evaluiert die Metriken für mehrere Dokument, berechnet den Durchschnitt
             output.append(u"    Metric & mean & stdev & TIGER \\\\")
             output.append(u"    \\hline")
         else:
-            output.append(u"METRIC MEAN STDEV REFERENCE")
+
+            output.append(u"%s | MEAN  | STDEV | TIGER" % u"METRIC".ljust(METRIC_COL_WIDTH))
+            output.append(u"--------------------+-------+-------+------")
         for i in range(len(metrics)):
             # Execute metrics on reference corpus
             val = metrics[i].evaluate(corp)
@@ -54,7 +56,7 @@ Evaluiert die Metriken für mehrere Dokument, berechnet den Durchschnitt
             if args.latex:
                 output.append(u"    %s & %s & %s & %s \\\\" % (metric_names[i].ljust(METRIC_COL_WIDTH), stats[i][0], stats[i][1], val))
             else:
-                output.append(u"%s %s %s %s" % (metric_names[i].ljust(METRIC_COL_WIDTH), stats[i][0], stats[i][1], val))
+                output.append(u"%s | %05.2f | %05.2f | %05.2f" % (metric_names[i].ljust(METRIC_COL_WIDTH), stats[i][0], stats[i][1], val))
         if args.latex:
             output.append(u"\\end{tabular}")
         return u"\n".join(output)
