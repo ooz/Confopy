@@ -46,7 +46,13 @@ Evaluiert die Metriken für mehrere Dokument, berechnet den Durchschnitt
             output.append(u"    Metric & mean & stdev & TIGER \\\\")
             output.append(u"    \\hline")
         else:
-
+            output.append(u"# Bericht \"%s\"" % self.ID)
+            output.append(u"")
+            output.append(u" * MEAN:  der Mittelwert über alle Dokumente")
+            output.append(u" * STDEV: die dazugehörige Standardabweichung")
+            output.append(u" * TIGER: Metrikwert für die deutsche Sprachereferenz,")
+            output.append(u"          den TIGER-Corpus.")
+            output.append(u"")
             output.append(u"%s | MEAN  | STDEV | TIGER" % u"METRIC".ljust(METRIC_COL_WIDTH))
             output.append(u"--------------------+-------+-------+------")
         for i in range(len(metrics)):
