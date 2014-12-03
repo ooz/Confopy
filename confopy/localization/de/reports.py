@@ -54,7 +54,7 @@ Evaluiert die Metriken für mehrere Dokument, berechnet den Durchschnitt
             output.append(u"          den TIGER-Corpus.")
             output.append(u"")
             output.append(u"%s | MEAN  | STDEV | TIGER" % u"METRIC".ljust(METRIC_COL_WIDTH))
-            output.append(u"--------------------+-------+-------+------")
+            output.append(u"%s-+-------+-------+------" % u"".ljust(METRIC_COL_WIDTH, u"-"))
         for i in range(len(metrics)):
             # Execute metrics on reference corpus
             val = metrics[i].evaluate(corp)
