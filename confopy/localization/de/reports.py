@@ -51,7 +51,7 @@ Evaluiert die Metriken für mehrere Dokument, berechnet den Durchschnitt
             output.append(u" * MEAN:  der Mittelwert über alle Dokumente")
             output.append(u" * STDEV: die dazugehörige Standardabweichung")
             output.append(u" * TIGER: Metrikwert für die deutsche Sprachereferenz,")
-            output.append(u"          den TIGER-Corpus.")
+            output.append(u"          den TIGER-Corpus")
             output.append(u"")
             output.append(u"%s | MEAN  | STDEV | TIGER" % u"METRIC".ljust(METRIC_COL_WIDTH))
             output.append(u"%s-+-------+-------+------" % u"".ljust(METRIC_COL_WIDTH, u"-"))
@@ -109,6 +109,15 @@ Benötigt eine gerade Anzahl n an Dokumenten (mind. 2).
             metrics = [A.get(metric=m) for m in metric_names]
             metrics = [m for m in metrics if m != None]
             if len(docs) == 2:
+                output.append(u"# Bericht \"%s\""% self.ID)
+                output.append(u"")
+                output.append(u" * PROGRESS: Vorher- --> Nachher-Wert.")
+                output.append(u"             (+) ... Erhöhung         ")
+                output.append(u"             (-) ... Verringerung     ")
+                output.append(u"             (=) ... gleichbleibend   ")
+                output.append(u"")
+                output.append(u"%s | PROGRESS" % u"METRIC".ljust(METRIC_COL_WIDTH))
+                output.append(u"%s-+---------------------" % u"".ljust(METRIC_COL_WIDTH, u"-"))
                 for m in metrics:
                     vals = [m.evaluate(doc) for doc in docs]
                     progress = u"="
@@ -116,7 +125,7 @@ Benötigt eine gerade Anzahl n an Dokumenten (mind. 2).
                         progress = u"-"
                     elif vals[0] < vals[1]:
                         progress = u"+"
-                    output.append(u"%s %.2f --> %.2f \t (%s)" % (m.ID, vals[0], vals[1], progress))
+                    output.append(u"%s | %05.2f --> %05.2f  (%s)" % (m.ID.ljust(METRIC_COL_WIDTH), vals[0], vals[1], progress))
 
             else:
                 half = len(docs) / 2
@@ -126,7 +135,17 @@ Benötigt eine gerade Anzahl n an Dokumenten (mind. 2).
                     output.append(u"                                 & \\multicolumn{1}{|c}{$\\#$} & \\multicolumn{1}{c|}{$\\Delta$} & \\multicolumn{1}{|c}{$\\#$} & \\multicolumn{1}{c|}{$\\Delta$} & \\multicolumn{1}{c}{$\\#$} \\\\")
                     output.append(u"    \\hline")
                 else:
-                    output.append(u"m.ID + delta+ - delta- =")
+                    output.append(u"# Bericht \"%s\"" % self.ID)
+                    output.append(u"")
+                    output.append(u" * +:      Anzahl an Metrikerhöhungen")
+                    output.append(u" * DELTA+: Durchschnittliche Erhöhung um diesen Wert")
+                    output.append(u" * -:      Anzahl an Metrikverringerungen")
+                    output.append(u" * DELTA-: Durchschnittliche Verringerung um diesen Wert")
+                    output.append(u" * =:      Anzahl an Dokumentpaaren, bei denen der")
+                    output.append(u"           Metrikwert gleich geblieben ist")
+                    output.append(u"")
+                    output.append(u"%s | +  | DELTA+ | -  | DELTA- | =  " % u"METRIC".ljust(METRIC_COL_WIDTH))
+                    output.append(u"%s-+----+--------+----+--------+----" % u"".ljust(METRIC_COL_WIDTH, u"-"))
                 for m in metrics:
                     results = list()
                     for i in range(half):
@@ -151,7 +170,7 @@ Benötigt eine gerade Anzahl n an Dokumenten (mind. 2).
                     if args.latex:
                         output.append(u"    %s & %s & %s & %s & %s & %s \\\\" % (m.ID, counts[0], avg_diffs[0], counts[1], avg_diffs[1], counts[2]))
                     else:
-                        output.append(u"%s (%s; %s) (%s; %s) %s" % (m.ID, counts[0], avg_diffs[0], counts[1], avg_diffs[1], counts[2]))
+                        output.append(u"%s | %02d | %06.3f | %02d | %06.3f | %02d" % (m.ID.ljust(METRIC_COL_WIDTH), counts[0], avg_diffs[0], counts[1], avg_diffs[1], counts[2]))
                 if args.latex:
                     output.append(u"\\end{tabular}")
         return u"\n".join(output)
