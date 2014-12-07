@@ -1,3 +1,10 @@
+0.4.7       2014/12/08
+
+ * Improve the readability of the doccomp report when used
+   without the --latex option
+ * Improve the readability of the multidoc report when used 
+   without the --latex option
+
 0.4.6       2014/11/24
 
  * Fix validation of Confopy XML documents
