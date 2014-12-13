@@ -66,11 +66,19 @@ def count_subsections(node):
     return len(subsections)
 
 def is_referenced(flt):
+    return _is_referenced(flt, False)
+
+def is_referenced_before(flt):
+    return _is_referenced(flt, True)
+
+def _is_referenced(flt, before):
     parent = flt.parent()
     if parent is not None:
         siblings = list()
         children = parent.children()
         for child in children:
+            if before and child == flt:
+                break
             if child.is_paragraph():
                 siblings.append(child)
         para_texts = [sib.text for sib in siblings]
@@ -84,10 +92,6 @@ def is_referenced(flt):
             flt_text = flt_text.replace(u":", u"")
             return flt_text in para_texts
 
-    return False
-
-def is_referenced_before(flt):
-    #TODO: implement!
     return False
 
 FLT_CAPTION_MIN_SIZE = 3
