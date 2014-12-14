@@ -89,6 +89,6 @@ class FloatCaptionRule(Rule):
         return not is_float(node) or has_caption(node)
 
     def message(self, node):
-        return u"Gleitobjekt \"%s\" hat keine Beschriftung!" % node.text.strip()
+        return u"Gleitobjekt \"%s\" hat keine oder eine zu kurze Beschriftung!" % node.text.strip()
 
 Analyzer.register(FloatCaptionRule())
