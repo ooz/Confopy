@@ -44,7 +44,11 @@ Analyzer.register(SubsectionRule())
 class FloatReferenceRule(Rule):
     """Floating objects must be referenced in the surrounding text.
     """
-    def __init__(self, ID=u"floatreference", language=u"de", brief=u"Gleitobjekte-Referenzen", description=u"Gleitobjekte müssen in den umliegenden Paragraphen referenziert werden"):
+    def __init__(self,
+                 ID=u"floatreference",
+                 language=u"de",
+                 brief=u"Gleitobjekte-Referenzen",
+                 description=u"Gleitobjekte müssen in den umliegenden Paragraphen referenziert werden"):
         super(FloatReferenceRule, self).__init__(ID, language, brief, description)
 
     def evaluate(self, node):
@@ -54,6 +58,25 @@ class FloatReferenceRule(Rule):
         return u"Gleitobjekt \"%s\" wird nicht im Text referenziert!" % node.text.strip()
 
 Analyzer.register(FloatReferenceRule())
+
+
+class FloatReferenceBeforeRule(Rule):
+    """Floating objects must be referenced in the text before their placement.
+    """
+    def __init__(self,
+                 ID=u"floatreferencebefore",
+                 language=u"de",
+                 brief=u"Gleitobjekte-Referenzen",
+                 description=u"Gleitobjekte müssen im vorstehenden Text referenziert werden"):
+        super(FloatReferenceBeforeRule, self).__init__(ID, language, brief, description)
+
+    def evaluate(self, node):
+        return not is_float(node) or is_referenced_before(node)
+
+    def message(self, node):
+        return u"Gleitobjekt \"%s\" wird nicht im vorstehenden Text referenziert!" % node.text.strip()
+
+Analyzer.register(FloatReferenceBeforeRule())
 
 
 class FloatCaptionRule(Rule):
