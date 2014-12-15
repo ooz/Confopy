@@ -3,7 +3,7 @@
 File: rule.py
 Author: Oliver Zscheyge
 Description:
-    Rule superclass.
+    Rule superclass and some predicates.
 '''
 
 from localizable import Localizable
@@ -27,6 +27,11 @@ class Rule(Localizable):
         return False
 
     def message(self, node):
+        """Returns an error message in case the rule is violated
+        (evaluate returns False).
+        Return:
+            Unicode error message.
+        """
         return u""
 
 #    def __str__(self):
