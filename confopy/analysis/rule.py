@@ -44,6 +44,12 @@ class Rule(Localizable):
 # Predicates
 
 def is_chapter(node):
+    """Checks whether a given node is a chapter node.
+    Sections that are direct children of a document node are
+    considered chapters too.
+    Return:
+        Boolean.
+    """
     if isinstance(node, Chapter):
         return True
     elif isinstance(node, Section):
@@ -53,12 +59,24 @@ def is_chapter(node):
     return False
 
 def is_section(node):
+    """Checks whether a given node is a section node.
+    Return:
+        Boolean.
+    """
     return isinstance(node, Section)
 
 def is_float(node):
+    """Checks whether a given node is a floating object.
+    Return:
+        Boolean.
+    """
     return node.is_float()
 
 def has_introduction(node):
+    """Checks whether a given node has an introductory paragraph.
+    Return:
+        Boolean.
+    """
     children = node.children()
     if len(children) > 0:
         first_child = children[0]
@@ -67,16 +85,33 @@ def has_introduction(node):
     return False
 
 def count_subsections(node):
+    """Counts the direct subsections of a node.
+    Return:
+        Integer, number of subsections.
+    """
     subsections = [child for child in node.children() if isinstance(child, Section)]
     return len(subsections)
 
 def is_referenced(flt):
+    """See #_is_referenced(flt, before).
+    """
     return _is_referenced(flt, False)
 
 def is_referenced_before(flt):
+    """See #_is_referenced(flt, before).
+    """
     return _is_referenced(flt, True)
 
 def _is_referenced(flt, before):
+    """Checks whether a given floating object is referenced in
+    the surrounding or preceding text.
+    Args:
+        flt:    Floating object to check.
+        before: Boolean flag indicating whether to check the
+                preceding (True) or surrounding (False) text.
+    Return:
+        Boolean.
+    """
     parent = flt.parent()
     if parent is not None:
         siblings = list()
@@ -102,6 +137,10 @@ def _is_referenced(flt, before):
 FLT_CAPTION_MIN_SIZE = 3
 FLT_CAPTION_NR_SIZE = 2
 def has_caption(flt):
+    """Checks whether a floating object has a caption.
+    Return:
+        Boolean.
+    """
     flt_text = flt.text.strip().replace(u"\n", u" ").split(u" ")
     if flt.number != u"":
         return len(flt_text) >= FLT_CAPTION_MIN_SIZE
