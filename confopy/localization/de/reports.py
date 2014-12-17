@@ -24,7 +24,7 @@ class MultiDocReport(Report):
                                              u"de",
                                              u"Überblick über mehrere Dokumente",
                                              u"""\
-Evaluiert die Metriken für mehrere Dokument, berechnet den Durchschnitt
+Evaluiert die Metriken für mehrere Dokumente, berechnet den Durchschnitt
     und die Standardabweichung.
     Listet in der letzten Spalte die Metrikwerte des TIGER-Corpus (deutsche
     Sprachreferenz).
