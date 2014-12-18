@@ -16,14 +16,14 @@ PAD = 2
 METRIC_COL_WIDTH = MAX_METRIC_STR_LEN + PAD
 
 ROUND = 2
-class MultiDocReport(Report):
-    """Overview/statistics for multiple documents.
+class DocumentAverages(Report):
+    """Average metric values for multiple documents.
     """
     def __init__(self):
-        super(MultiDocReport, self).__init__(u"multidoc",
-                                             u"de",
-                                             u"Überblick über mehrere Dokumente",
-                                             u"""\
+        super(DocumentAverages, self).__init__(u"docsavg",
+                                               u"de",
+                                               u"Durchschnitt über mehrere Dokumente",
+                                               u"""\
 Evaluiert die Metriken für mehrere Dokumente, berechnet den Durchschnitt
     und die Standardabweichung.
     Listet in der letzten Spalte die Metrikwerte des TIGER-Corpus (deutsche
@@ -76,7 +76,7 @@ Evaluiert die Metriken für mehrere Dokumente, berechnet den Durchschnitt
         import sys
         #sys.exit(0)
 
-Analyzer.register(MultiDocReport())
+Analyzer.register(DocumentAverages())
 
 class DocumentComparison(Report):
     """Compares the metrics of 2 documents side by side
@@ -294,3 +294,12 @@ Berechnet die Metriken für jedes Kapitel einzeln.""")
         return u"\n".join(output)
 
 Analyzer.register(SectionsReport())
+
+
+
+class ManyDocumentsReport(Report):
+    """Metric values for multiple documents.
+    """
+    def __init__(self):
+        super(ManyDocumentsReport, self).__init__()
+
