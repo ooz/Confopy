@@ -179,6 +179,25 @@ Analyzer.register(DocumentComparison())
 
 
 
+class MultiDocumentReport(Report):
+    """Overview over multiple documents.
+    """
+    def __init__(self,
+                 ID=u"multidoc",
+                 lang=u"de",
+                 brief=u"Überblick über mehrere Dokumente",
+                 description=u"""\
+Berechnet die Metrikwerte für mehrere Dokumente.
+    Unterstützt die Option --latex."""):
+        super(MultiDocumentReport, self).__init__(ID, lang, brief, description)
+
+    def execute(self, docs, args):
+        pass
+
+Analyzer.register(MultiDocumentReport())
+
+
+
 class _MetricExpectation(object):
     """docstring for _MetricExpectation"""
     def __init__(self, low=None, high=None, msg_toolow=u"", msg_toohigh=u"", msg_ok=u"OK!"):
