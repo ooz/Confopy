@@ -67,15 +67,6 @@ Evaluiert die Metriken für mehrere Dokumente, berechnet den Durchschnitt
             output.append(u"\\end{tabular}")
         return u"\n".join(output)
 
-    def _nltk_test(self, doc, corp):
-        #sent_tokenizer = corp.sent_tokenizer()
-        #sents = doc.sents(tokenizer=sent_tokenizer)
-        #for s in sents:
-        #    print u"SENTENCE"
-        #    print s
-        import sys
-        #sys.exit(0)
-
 Analyzer.register(DocumentAverages())
 
 class DocumentComparison(Report):
