@@ -171,7 +171,7 @@ Analyzer.register(DocumentComparison())
 
 
 class MultiDocumentReport(Report):
-    """Overview over multiple documents.
+    """Metric values for multiple documents.
     """
     def __init__(self,
                  ID=u"multidoc",
@@ -183,15 +183,26 @@ Berechnet die Metrikwerte für mehrere Dokumente.
         super(MultiDocumentReport, self).__init__(ID, lang, brief, description)
 
     def execute(self, docs, args):
-        pass
+        output = []
+        #TODO
+        return u"\n".join(output)
 
 Analyzer.register(MultiDocumentReport())
 
 
 
 class _MetricExpectation(object):
-    """docstring for _MetricExpectation"""
+    """Stores expected metric values.
+    """
     def __init__(self, low=None, high=None, msg_toolow=u"", msg_toohigh=u"", msg_ok=u"OK!"):
+        """Initializer.
+        Args:
+            low:         Lowest expected metric value.
+            high:        Highest expected metric value.
+            msg_toolow:  Message to print when metric value is lower than low.
+            msg_toohigh: Message to print when metric value is higher than high.
+            msg_ok:      Message to print when metric value is between low and high.
+        """
         super(_MetricExpectation, self).__init__()
         self.low = low
         self.high = high
@@ -304,12 +315,3 @@ Berechnet die Metriken für jedes Kapitel einzeln.""")
         return u"\n".join(output)
 
 Analyzer.register(SectionsReport())
-
-
-
-class ManyDocumentsReport(Report):
-    """Metric values for multiple documents.
-    """
-    def __init__(self):
-        super(ManyDocumentsReport, self).__init__()
-
