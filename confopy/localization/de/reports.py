@@ -11,6 +11,7 @@ from confopy.analysis.rule import eval_doc
 
 
 METRIC_NAMES = [u"wordlength", u"spellcheck", u"lexicon", u"sentlength", u"ari", u"personalstyle", u"impersonalstyle", u"passiveconstructs", u"simplepres", u"adverbmodifier", u"deadverbs", u"fillers", u"examplecount", u"sentlengthvar"]
+RULE_NAMES = [u"introduction", u"subsections", u"floatreference", u"floatreferencebefore", u"floatcaption"]
 MAX_METRIC_STR_LEN = reduce(max, [len(name) for name in METRIC_NAMES])
 PAD = 2
 METRIC_COL_WIDTH = MAX_METRIC_STR_LEN + PAD
@@ -209,6 +210,15 @@ Berechnet die Metrikwerte für mehrere Dokumente.
             value_str = reduce(lambda a, b: a + b, value_str, u"")
             output.append(u"%s%s" % (metric_names[i].ljust(METRIC_COL_WIDTH), value_str))
 
+        # Rule violations
+        output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
+        rule_IDs = RULE_NAMES
+        rules = [A.get(rule=ID) for ID in rule_IDs if A.get(rule=ID) is not None]
+        violated_rule_counts = [len(eval_doc(doc, rules)) for doc in docs]
+        violated_rule_counts_str = map(u"|    %02d ".__mod__, violated_rule_counts)
+        violated_rule_counts_str = reduce(lambda a, b: a + b, violated_rule_counts_str)
+        output.append(u"%s%s" % (u"Violated rules".ljust(METRIC_COL_WIDTH), violated_rule_counts_str))
+
         return u"\n".join(output)
 
 Analyzer.register(MultiDocumentReport())
@@ -276,7 +286,7 @@ Berechnet die Metriken für ein Dokument und überorüft die Regeln."""):
         output.append(u"")
         output.append(u"## Regeln")
         output.append(u"")
-        rule_IDs = [u"introduction", u"subsections", u"floatreference", u"floatreferencebefore", u"floatcaption"]
+        rule_IDs = RULE_NAMES
         A = Analyzer.instance()
         rules = [A.get(rule=ID) for ID in rule_IDs if A.get(rule=ID) is not None]
         rule_messages = eval_doc(doc, rules)
