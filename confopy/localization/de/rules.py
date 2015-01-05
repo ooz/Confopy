@@ -71,7 +71,7 @@ class FloatReferenceBeforeRule(Rule):
         super(FloatReferenceBeforeRule, self).__init__(ID, language, brief, description)
 
     def evaluate(self, node):
-        return not is_float(node) or is_referenced_before(node)
+        return not is_float(node) or was_referenced_before(node)
 
     def message(self, node):
         return u"Gleitobjekt \"%s\" wird nicht im vorstehenden Text referenziert!" % node.text.strip()

@@ -97,7 +97,7 @@ def is_referenced(flt):
     """
     return _is_referenced(flt, False)
 
-def is_referenced_before(flt):
+def was_referenced_before(flt):
     """See #_is_referenced(flt, before).
     """
     return _is_referenced(flt, True)
@@ -210,10 +210,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id
     assert not is_referenced(floatB)
     assert is_referenced(floatC)
 
-    print u"  Testing is_referenced_before..."
-    assert not is_referenced_before(floatA)
-    assert not is_referenced_before(floatB)
-    assert is_referenced_before(floatC)
+    print u"  Testing was_referenced_before..."
+    assert not was_referenced_before(floatA)
+    assert not was_referenced_before(floatB)
+    assert was_referenced_before(floatC)
 
     print u"  Testing count_subsections..."
     assert count_subsections(doc) == 2
