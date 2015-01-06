@@ -194,30 +194,50 @@ Berechnet die Metrikwerte für mehrere Dokumente.
         for m in metrics:
             results.append([m.evaluate(d) for d in docs])
 
-        output.append(u"# Bericht \"%s\"" % self.ID)
-        output.append(u"")
         doc_numbers = range(1, len(docs) + 1)
-        docs_header_str = map(u"| doc%02d ".__mod__, doc_numbers)
-        docs_header_str = reduce(lambda a, b: a + b, docs_header_str, u"")
-        output.append(u"%s%s" % (u"METRIC".ljust(METRIC_COL_WIDTH), docs_header_str))
-        dash_length = len(docs_header_str) - 2
-        if dash_length < 0:
-            dash_length = 0
-        output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
-        for i in range(len(metrics)):
-            results_for_metric = results[i]
-            value_str = map(u"| %05.2f ".__mod__, results_for_metric)
-            value_str = reduce(lambda a, b: a + b, value_str, u"")
-            output.append(u"%s%s" % (metric_names[i].ljust(METRIC_COL_WIDTH), value_str))
+        if args.latex:
+            tabular_format_str = [u" r" for d in docs]
+            tabular_format_str = u"".join(tabular_format_str)
+            output.append(u"\\begin{tabular}{l|%s}" % tabular_format_str)
+            docs_header_str = map(u"& doc%02d ".__mod__, doc_numbers)
+            docs_header_str = u"".join(docs_header_str)
+            output.append(u"    Metrik %s\\\\" % docs_header_str)
+            output.append(u"    \\hline")
+            for i in range(len(metrics)):
+                value_str = map(u"& %.2f ".__mod__, results[i])
+                value_str = u"".join(value_str)
+                output.append(u"    %s %s\\\\" % (metric_names[i].ljust(METRIC_COL_WIDTH), value_str))
+        else:
+            output.append(u"# Bericht \"%s\"" % self.ID)
+            output.append(u"")
+            docs_header_str = map(u"| doc%02d ".__mod__, doc_numbers)
+            docs_header_str = reduce(lambda a, b: a + b, docs_header_str, u"")
+            output.append(u"%s%s" % (u"METRIC".ljust(METRIC_COL_WIDTH), docs_header_str))
+            dash_length = len(docs_header_str) - 2
+            if dash_length < 0:
+                dash_length = 0
+            output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
+            for i in range(len(metrics)):
+                value_str = map(u"| %05.2f ".__mod__, results[i])
+                value_str = reduce(lambda a, b: a + b, value_str, u"")
+                output.append(u"%s%s" % (metric_names[i].ljust(METRIC_COL_WIDTH), value_str))
 
         # Rule violations
-        output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
         rule_IDs = RULE_NAMES
         rules = [A.get(rule=ID) for ID in rule_IDs if A.get(rule=ID) is not None]
         violated_rule_counts = [len(eval_doc(doc, rules)) for doc in docs]
-        violated_rule_counts_str = map(u"|    %02d ".__mod__, violated_rule_counts)
-        violated_rule_counts_str = reduce(lambda a, b: a + b, violated_rule_counts_str)
-        output.append(u"%s%s" % (u"Violated rules".ljust(METRIC_COL_WIDTH), violated_rule_counts_str))
+
+        if args.latex:
+            output.append(u"    \\hline")
+            violated_rule_counts_str = map(u"& %d ".__mod__, violated_rule_counts)
+            violated_rule_counts_str = u"".join(violated_rule_counts_str)
+            output.append(u"    %s %s\\\\" % (u"Regelverletzungen".ljust(METRIC_COL_WIDTH), violated_rule_counts_str))
+            output.append(u"\\end{tabular}")
+        else:
+            output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
+            violated_rule_counts_str = map(u"|    %02d ".__mod__, violated_rule_counts)
+            violated_rule_counts_str = u"".join(violated_rule_counts_str)
+            output.append(u"%s%s" % (u"Violated rules".ljust(METRIC_COL_WIDTH), violated_rule_counts_str))
 
         return u"\n".join(output)
 
