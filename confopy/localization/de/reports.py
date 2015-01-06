@@ -211,7 +211,7 @@ Berechnet die Metrikwerte für mehrere Dokumente.
             output.append(u"# Bericht \"%s\"" % self.ID)
             output.append(u"")
             docs_header_str = map(u"| doc%02d ".__mod__, doc_numbers)
-            docs_header_str = reduce(lambda a, b: a + b, docs_header_str, u"")
+            docs_header_str = u"".join(docs_header_str)
             output.append(u"%s%s" % (u"METRIC".ljust(METRIC_COL_WIDTH), docs_header_str))
             dash_length = len(docs_header_str) - 2
             if dash_length < 0:
@@ -219,7 +219,7 @@ Berechnet die Metrikwerte für mehrere Dokumente.
             output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
             for i in range(len(metrics)):
                 value_str = map(u"| %05.2f ".__mod__, results[i])
-                value_str = reduce(lambda a, b: a + b, value_str, u"")
+                value_str = u"".join(value_str)
                 output.append(u"%s%s" % (metric_names[i].ljust(METRIC_COL_WIDTH), value_str))
 
         # Rule violations
