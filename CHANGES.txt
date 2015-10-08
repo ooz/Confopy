@@ -1,3 +1,8 @@
+0.4.8       2015/10/08
+
+ * The multidoc report now counts the number of metric transgressions 
+   and highlights those values in the latex output
+
 0.4.7       2014/12/08
 
  * Improve the readability of the doccomp report when used
