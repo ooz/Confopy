@@ -183,6 +183,22 @@ Berechnet die Metrikwerte für mehrere Dokumente.
     Unterstützt die Option --latex."""):
         super(MultiDocumentReport, self).__init__(ID, lang, brief, description)
 
+    def compute_exceedances(self, metric_names, results):
+        exceedances = list()
+        for i in range(len(metric_names)):
+            metric_name = metric_names[i]
+            expect = _METRIC_EXPECTATIONS[metric_name]
+            metric_results = results[i]
+            exceedances_for_metric = list()
+            for val in metric_results:
+                val = round(val, 2)
+                if ((expect.low is not None) and val < expect.low) or ((expect.high is not None) and val > expect.high):
+                    exceedances_for_metric.append(1)
+                else:
+                    exceedances_for_metric.append(0)
+            exceedances.append(exceedances_for_metric)
+        return exceedances
+
     def execute(self, docs, args):
         output = []
         metric_names = METRIC_NAMES
@@ -194,6 +210,10 @@ Berechnet die Metrikwerte für mehrere Dokumente.
         for m in metrics:
             results.append([m.evaluate(d) for d in docs])
 
+        exceedances = self.compute_exceedances(metric_names, results)
+        exceedances_transposed = list(map(list, zip(*exceedances)))
+
+        # Metric matrix output
         doc_numbers = range(1, len(docs) + 1)
         if args.latex:
             tabular_format_str = [u" r" for d in docs]
@@ -204,8 +224,14 @@ Berechnet die Metrikwerte für mehrere Dokumente.
             output.append(u"    Metrik %s\\\\" % docs_header_str)
             output.append(u"    \\hline")
             for i in range(len(metrics)):
-                value_str = map(u"& %.2f ".__mod__, results[i])
-                value_str = u"".join(value_str)
+                value_str = u""
+                for doc_nr in range(len(results[i])):
+                    if exceedances[i][doc_nr] == 1:
+                        value_str = value_str + u"& \emph{%.2f} " % results[i][doc_nr]
+                    else:
+                        value_str = value_str + u"& %.2f " % results[i][doc_nr]
+                #value_str = map(u"& %.2f ".__mod__, results[i])
+                #value_str = u"".join(value_str)
                 output.append(u"    %s %s\\\\" % (metric_names[i].ljust(METRIC_COL_WIDTH), value_str))
         else:
             output.append(u"# Bericht \"%s\"" % self.ID)
@@ -222,19 +248,30 @@ Berechnet die Metrikwerte für mehrere Dokumente.
                 value_str = u"".join(value_str)
                 output.append(u"%s%s" % (metric_names[i].ljust(METRIC_COL_WIDTH), value_str))
 
+        # Exceedances/shortfalls
+        exceedances_counts = map(sum, exceedances_transposed)
+        if args.latex:
+            output.append(u"    \\hline")
+            exceedances_str = map(u"& %d ".__mod__, exceedances_counts)
+            exceedances_str = u"".join(exceedances_str)
+            output.append(u"    %s %s\\\\" % (u"Überschreitungen".ljust(METRIC_COL_WIDTH), exceedances_str))
+        else:
+            output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
+            exceedances_str = map(u"|    %02d ".__mod__, exceedances_counts)
+            exceedances_str = u"".join(exceedances_str)
+            output.append(u"%s%s" % (u"Transgressions".ljust(METRIC_COL_WIDTH), exceedances_str))
+
         # Rule violations
         rule_IDs = RULE_NAMES
         rules = [A.get(rule=ID) for ID in rule_IDs if A.get(rule=ID) is not None]
         violated_rule_counts = [len(eval_doc(doc, rules)) for doc in docs]
 
         if args.latex:
-            output.append(u"    \\hline")
             violated_rule_counts_str = map(u"& %d ".__mod__, violated_rule_counts)
             violated_rule_counts_str = u"".join(violated_rule_counts_str)
             output.append(u"    %s %s\\\\" % (u"Regelverletzungen".ljust(METRIC_COL_WIDTH), violated_rule_counts_str))
             output.append(u"\\end{tabular}")
         else:
-            output.append(u"%s+%s" % (u"".ljust(METRIC_COL_WIDTH, u"-"), u"".ljust(dash_length, u"-")))
             violated_rule_counts_str = map(u"|    %02d ".__mod__, violated_rule_counts)
             violated_rule_counts_str = u"".join(violated_rule_counts_str)
             output.append(u"%s%s" % (u"Violated rules".ljust(METRIC_COL_WIDTH), violated_rule_counts_str))
