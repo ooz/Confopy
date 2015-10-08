@@ -1,7 +1,18 @@
+0.4.8.1     2015/10/09
+
+ * Fix changelog for v0.4.8
+
 0.4.8       2015/10/08
 
- * The multidoc report now counts the number of metric transgressions 
-   and highlights those values in the latex output
+ * Add a new rule that checks whether a floating object was referenced
+   before its occurence
+ * Increase verbosity of the caption rule
+ * The former "multidoc" report is now known as "docsavg"
+ * New report "multidoc": 
+    - displays metric values for multiple documents
+    - counts the number of metric transgressions and highlights those
+      values in the latex output
+    - counts the number of rule violations
 
 0.4.7       2014/12/08
 
