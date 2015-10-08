@@ -180,6 +180,8 @@ class MultiDocumentReport(Report):
                  brief=u"Überblick über mehrere Dokumente",
                  description=u"""\
 Berechnet die Metrikwerte für mehrere Dokumente.
+    Zählt zusätzlich die Anzahl der Regelverletzungen und der
+    Über-/Unterschreitungen der Metrikerwartungsbereiche.
     Unterstützt die Option --latex."""):
         super(MultiDocumentReport, self).__init__(ID, lang, brief, description)
 
