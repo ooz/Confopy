@@ -10,21 +10,14 @@ dist/
 data/
 doc/
 talk/
+xml/
 
 MANIFEST
 model_classdia.dot
 model_classdia.png
-draft.xml
-draftfinal.xml
-final.xml
-draft2.xml
-draftfinal2.xml
-final2.xml
 makefile
-minus.xml
 mt_status.txt
 nlp.txt
 nltk_data.txt
-plus.xml
 run_classdia.sh
 run_main.sh
