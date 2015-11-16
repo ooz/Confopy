@@ -1,3 +1,8 @@
+0.4.9       2015/11/16
+
+ * Fix a bug with referenced rules not detecting references containing
+   newlines
+
 0.4.8.1     2015/10/09
 
  * Fix changelog for v0.4.8
