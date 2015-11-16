@@ -130,7 +130,9 @@ def _is_referenced(flt, before):
         if len(flt_text) >= 2:
             flt_text = flt_text[0].strip() + u" " + flt_text[1].strip()
             flt_text = flt_text.replace(u":", u"")
-            return flt_text in para_texts
+            # dirty hack, use regex for whitespace in future
+            flt_text_newline = flt_text.replace(u" ", u"\n")
+            return (flt_text in para_texts) or (flt_text_newline in para_texts)
 
     return False
 
@@ -182,7 +184,7 @@ if __name__ == '__main__':
     sec11 = Section(title=u"1.1 Bar")
     sec12 = Section(title=u"1.2 Baz")
     sec2 = Section(title=u"2. Raboof")
-    para0 = Paragraph(text=u"Intro text. Tabelle 3 zeigt Foo.")
+    para0 = Paragraph(text=u"Intro text. Tabelle\n3 zeigt Foo.")
     para1 = Paragraph(text=u"""\
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia nec massa id interdum. Ut dolor mauris, mollis quis sagittis at, viverra ac mauris. Phasellus pharetra dolor neque, sit amet ultricies nibh imperdiet lobortis. Fusce ac blandit ex, eu feugiat eros. Etiam nec erat enim. Fusce at metus ac dui sagittis laoreet. Nulla suscipit nisl ut lacus viverra, a vestibulum est lacinia. Aliquam finibus urna nunc, nec venenatis mi dictum eget. Etiam vitae ante quis neque aliquam vulputate id sit amet massa. Pellentesque elementum sapien non mauris laoreet cursus. Pellentesque at mauris id ipsum viverra egestas. Sed nec volutpat metus, vel sollicitudin ante. Pellentesque interdum justo vel ullamcorper dictum. Phasellus volutpat nibh eget arcu venenatis, a bibendum lorem mattis. Quisque in laoreet leo.""")
     para2 = Paragraph(text=u"Tabelle 1 zeigt Foobar.")
