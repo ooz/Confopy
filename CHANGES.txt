@@ -1,3 +1,11 @@
+0.4.11      2016/11/21
+
+ * Enable document report to handle multiple documents
+
+0.4.10      2016/11/21
+
+ * Add known issues section to README
+
 0.4.9       2015/11/16
 
  * Fix a bug with referenced rules not detecting references containing

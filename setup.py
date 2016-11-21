@@ -14,7 +14,7 @@ if sys.argv[-1] == 'publish':
 
 setup(
     name="Confopy",
-    version="0.4.9",
+    version="0.4.11",
     url="https://github.com/ooz/Confopy",
     author="Oliver Zscheyge",
     author_email="oliverzscheyge@gmail.com",
