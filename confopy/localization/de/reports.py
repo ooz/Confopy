@@ -328,32 +328,33 @@ class DocumentReport(Report):
                  lang=u"de",
                  brief=u"Überblick über ein einzelnes Dokument",
                  description=u"""\
-Berechnet die Metriken für ein Dokument und überorüft die Regeln."""):
+Berechnet die Metriken für ein Dokument und überprüft die Regeln.
+    Kann auch auf mehreren Dokumenten nacheinander ausgeführt werden."""):
         super(DocumentReport, self).__init__(ID, lang, brief, description)
 
     def execute(self, docs, args):
         if len(docs) < 1:
             return u""
-        output = list()
-        output.append(u"# Dokumentbericht")
-        output.append(u"")
-        output.append(u"## Metriken")
-        output.append(u"")
-        doc = docs[0]
-        for metric_ID in sorted((_METRIC_EXPECTATIONS.keys())):
-            output.append(self._execute_metric(metric_ID, doc))
-        output.append(u"")
-        output.append(u"## Regeln")
-        output.append(u"")
-        rule_IDs = RULE_NAMES
-        A = Analyzer.instance()
-        rules = [A.get(rule=ID) for ID in rule_IDs if A.get(rule=ID) is not None]
-        rule_messages = eval_doc(doc, rules)
-        if len(rule_messages) == 0:
-            output.append(u"Es liegen keine Regelverletzungen vor!")
-        else:
-            for m in rule_messages:
-                output.append(m)
+        output = []
+        for doc in docs:
+            output.append(u"# Dokumentbericht")
+            output.append(u"")
+            output.append(u"## Metriken")
+            output.append(u"")
+            for metric_ID in sorted((_METRIC_EXPECTATIONS.keys())):
+                output.append(self._execute_metric(metric_ID, doc))
+            output.append(u"")
+            output.append(u"## Regeln")
+            output.append(u"")
+            rule_IDs = RULE_NAMES
+            A = Analyzer.instance()
+            rules = [A.get(rule=ID) for ID in rule_IDs if A.get(rule=ID) is not None]
+            rule_messages = eval_doc(doc, rules)
+            if len(rule_messages) == 0:
+                output.append(u"Es liegen keine Regelverletzungen vor!")
+            else:
+                for m in rule_messages:
+                    output.append(m)
         return u"\n".join(output)
 
     def _execute_metric(self, metric_ID, node):
