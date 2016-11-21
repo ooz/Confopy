@@ -108,8 +108,20 @@ Python 3
  * The package python-pdfminer only works with python 2.4 or newer, but not with python 3
 
 
+Known Issues and Workarounds
+===============================
+
+enchant.errors.DictNotFoundError: Dictionary for language 'de_DE' could not be found
+------------------------------------------------------------------------------------
+
+Install the German aspell package. E.g. on Ubuntu 16.04:
+
+```
+sudo apt install aspell-de
+```
+
 Unicode errors
-==============
+--------------
 
  * Configure terminal to use unicode!
  * For Python devs:
