@@ -1,0 +1,11 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[packages]
+lxml = "*"
+numpy = "==1.6.2"
+nltk = "==3.0.0"
+pattern = "==2.6"
+pyenchant = "==1.6.5"
+pdfminer = "==20110515"
